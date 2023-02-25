@@ -52,7 +52,7 @@ const DashboardLayout = ({ children }) => {
                 <span className="ml-3 text-sm font-semibold">Trang chủ</span>
               </a>
             </li>
-            
+
             <li>
               <Link
                 href="/dashboard/view-score"
