@@ -1,6 +1,38 @@
 import Image from "next/image";
 
 const StudentInfo = () => {
+  // const info = [
+  //   {
+  //     id: 1,
+  //     key: 'Name',
+  //     value: 'Tin Nguyen'
+  //   },
+  //   {
+  //     id: 1,
+  //     key: 'Student Id',
+  //     value: 'abc123'
+  //   },
+  //   {
+  //     id: 1,
+  //     key: 'Phone',
+  //     value: '+84 999999999'
+  //   },
+  //   {
+  //     id: 1,
+  //     key: 'Email',
+  //     value: 'tin@gmail.com'
+  //   },
+  //   {
+  //     id: 1,
+  //     key: 'Address',
+  //     value: 'Vietnam'
+  //   },
+  //   {
+  //     id: 1,
+  //     key: 'Class',
+  //     value: 'Th1234'
+  //   }
+  // ]
   return (
     <>
       <div className="p-4 sm:ml-64 flex flex-row">
