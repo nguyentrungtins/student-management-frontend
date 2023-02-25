@@ -3,9 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { GiAchievement, GiNotebook } from "react-icons/gi";
 import { RxDashboard, RxCalendar, RxDotsHorizontal } from "react-icons/rx";
-import { BiSidebar, BiLogOut } from "react-icons/bi";
+import { BiSidebar, BiLogOut, BiUser } from "react-icons/bi";
 import Logo from "../../../public/Logo.svg";
-const Dashoardlayout = ({ children }) => {
+const DashboardLayout = ({ children }) => {
   return (
     <aside className="p-[25px]">
       <button
@@ -52,48 +52,60 @@ const Dashoardlayout = ({ children }) => {
                 <span className="ml-3 text-sm font-semibold">Trang chủ</span>
               </a>
             </li>
+
             <li>
-              <a
-                href="#"
+              <Link
+                href="/dashboard/view-score"
                 className="flex items-center p-2 text-base font-normal hover:text-gray-900 text-gray-600 rounded-lg hover:bg-gray-100 "
               >
                 <GiAchievement className="flex-shrink-0 w-5 h-5 text-gray-600 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3 text-sm font-semibold">Điểm số</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/dashboard/subject-registration"
                 className="flex items-center p-2 text-base font-normal hover:text-gray-900 text-gray-600 rounded-lg hover:bg-gray-100 "
               >
                 <GiNotebook className="flex-shrink-0 w-5 h-5 text-gray-600 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3 text-sm font-semibold">
                   Đăng kí môn học
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/dashboard/schedules"
                 className="flex items-center p-2 text-base font-normal hover:text-gray-900 text-gray-600 rounded-lg hover:bg-gray-100 "
               >
                 <RxCalendar className="flex-shrink-0 w-5 h-5 text-gray-600 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3 text-sm font-semibold">
                   Thời khóa biểu
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/dashboard/exam-date"
                 className="flex items-center p-2 text-base font-normal hover:text-gray-900 text-gray-600 rounded-lg hover:bg-gray-100 "
               >
                 <BiSidebar className="flex-shrink-0 w-5 h-5 text-gray-600 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span className="ml-3 text-sm font-semibold">Lịch thi</span>
-              </a>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/dashboard/student-info"
+                className="flex items-center p-2 text-base font-normal hover:text-gray-900 text-gray-600 rounded-lg hover:bg-gray-100 "
+              >
+                <BiUser className="flex-shrink-0 w-5 h-5 text-gray-600 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
+                <span className="ml-3 text-sm font-semibold">
+                  Thông tin sinh viên
+                </span>
+              </Link>
             </li>
           </ul>
-          <a
+          <Link
             href="#"
             className="flex h-20 w-full gap-3 items-center pl-5 rounded-lg hover:bg-gray-100"
           >
@@ -112,7 +124,7 @@ const Dashoardlayout = ({ children }) => {
                 Software Developer
               </span>
             </div>
-          </a>
+          </Link>
           <a
             className="flex items-center justify-center gap-5 mt-5 mx-3 h-10 rounded-lg hover:bg-gray-200 bg-gray-100 text-gray-600 hover:text-gray-900"
             href="#"
@@ -127,4 +139,4 @@ const Dashoardlayout = ({ children }) => {
   );
 };
 
-export default Dashoardlayout;
+export default DashboardLayout;
