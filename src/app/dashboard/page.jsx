@@ -1,6 +1,6 @@
 import React from "react";
-import Link from "next/link";
-const Dashboard = () => {
+
+const Dashboard = async () => {
   return (
     <>
       <div className="p-4 sm:ml-64">
