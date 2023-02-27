@@ -7,7 +7,7 @@ import { BiSidebar, BiLogOut, BiUser } from "react-icons/bi";
 import Logo from "../../../public/Logo.svg";
 const DashboardLayout = ({ children }) => {
   return (
-    <aside className="px-[25px]">
+    <aside className="px-6">
       <button
         data-drawer-target="default-sidebar"
         data-drawer-toggle="default-sidebar"
