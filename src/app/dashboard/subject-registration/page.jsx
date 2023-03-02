@@ -1,13 +1,124 @@
-import React from "react";
+"use client";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+//import { useSearchParams } from "next/navigation";
+//import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 
 const subjectRegistration = () => {
+  const [setting, setSetting] = useState();
+  const [datas, setDatas] = useState();
+  const router = useRouter();
+
+  const [url1, setUrl1] = useState({
+    page: 1,
+    limit: 2,
+    select: "all",
+    search: "",
+  });
+
+  useEffect(() => {
+    if (sessionStorage.getItem("access_token")) {
+      if (sessionStorage.getItem("role") == "Student") {
+        router.push("/dashboard/subject-registration");
+      } else {
+        router.push('/auth/login');
+      }
+    }
+  },[])
+  //console.log(datas);
+  useEffect(() => {
+    const url = `http://localhost:3030/class/get/?page=${url1.page}&limit=${url1.limit}&select=${url1.select}&search=${url1.search}`;
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      })
+      .then((res) => {
+        setSetting({
+          limit: res.data.limit,
+          page: res.data.page,
+          page_total: res.data.page_total,
+          totalClass: res.data.totalClass,
+        });
+        setDatas(res.data.class);
+      })
+      .catch(function (err) {
+        //console.log(err);
+        //console.log("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!");
+        sessionStorage.removeItem("access_token");
+        router.push("/auth/login");
+      });
+  }, [url1]);
+
+  const handleClickSort = () => {
+    const newData = datas.sort((a, b) => {
+      var name_a = a.data.id_subject.subject_name.toUpperCase();
+      var name_b = b.data.id_subject.subject_name.toUpperCase();
+
+      if (name_a > name_b) return 1;
+      if (name_a < name_b) return -1;
+
+      return 0;
+    });
+    const updateData = [...newData];
+    setDatas(updateData);
+  };
+
+  const handleSignIn = (id_class) => {
+    const data = {
+      sign: "signin",
+      id_class: id_class,
+      query: url1,
+    };
+    //console.log(id_class)
+    axios
+      .post("http://localhost:3030/class/sign", data, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      })
+      .then((res) => {
+        setDatas(res.data.class);
+      })
+      .catch(function (err) {
+        sessionStorage.removeItem("access_token");
+        router.push("/auth/login");
+      });
+  };
+
+  const handleSignOut = (id_class) => {
+    const data = {
+      sign: "signout",
+      id_class: id_class,
+      query: url1,
+    };
+    //console.log(id_class);
+    axios
+      .post("http://localhost:3030/class/sign", data, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      })
+      .then((res) => {
+        setDatas(res.data.class);
+        //console.log(res.data)
+      })
+      .catch(function (err) {
+        sessionStorage.removeItem("access_token");
+        router.push("/auth/login");
+      });
+  };
+
   return (
     <div className="px-4 py-2 sm:ml-64">
       <div className="p-2">
         <h1 className="sm:pl-20 text-xl text-gray-900 font-semibold">
           Đăng Ký Môn Học - học kỳ I, 2023
         </h1>
-        <div className="min-h-[1000px] w-11/12 mt-20 mx-auto">
+        <div className="w-11/12 mt-20 mx-auto">
           <section className="container px-4 mx-auto">
             <div className="sm:flex sm:items-center sm:justify-between">
               <div>
@@ -16,7 +127,7 @@ const subjectRegistration = () => {
                     Môn học
                   </h2>
                   <span className="px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400">
-                    240
+                    {setting && setting.totalClass}
                   </span>
                 </div>
 
@@ -76,15 +187,30 @@ const subjectRegistration = () => {
 
             <div className="mt-6 md:flex md:items-center md:justify-between">
               <div className="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
-                <button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
+                <button
+                  onClick={() =>
+                    setUrl1((state) => ({ ...state, select: "all" }))
+                  }
+                  className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300"
+                >
                   Tất Cả
                 </button>
 
-                <button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+                <button
+                  onClick={() =>
+                    setUrl1((state) => ({ ...state, select: "dadangki" }))
+                  }
+                  className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
+                >
                   Đã Đăng Ký
                 </button>
 
-                <button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100">
+                <button
+                  onClick={() =>
+                    setUrl1((state) => ({ ...state, select: "chuadangki" }))
+                  }
+                  className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm dark:hover:bg-gray-800 dark:text-gray-300 hover:bg-gray-100"
+                >
                   Chưa Đăng Ký
                 </button>
               </div>
@@ -109,6 +235,13 @@ const subjectRegistration = () => {
 
                 <input
                   type="text"
+                  value={url1.search}
+                  onChange={(event) =>
+                    setUrl1((state) => ({
+                      ...state,
+                      search: event.target.value,
+                    }))
+                  }
                   placeholder="Search"
                   className="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 />
@@ -129,6 +262,7 @@ const subjectRegistration = () => {
                             <button className="flex items-center gap-x-3 focus:outline-none">
                               <span>Môn học</span>
                               <svg
+                                onClick={handleClickSort}
                                 className="h-3"
                                 viewBox="0 0 10 11"
                                 fill="none"
@@ -157,17 +291,10 @@ const subjectRegistration = () => {
                           </th>
                           <th
                             scope="col"
-                            className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            className="py-3.5 px-4 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400"
                           >
                             Số tín chỉ
                           </th>
-                          <th
-                            scope="col"
-                            className="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
-                          >
-                            Tình trạng
-                          </th>
-
                           <th
                             scope="col"
                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
@@ -179,163 +306,117 @@ const subjectRegistration = () => {
                             scope="col"
                             className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
                           >
+                            Thông Tin
+                          </th>
+
+                          <th
+                            scope="col"
+                            className="px-4 py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400"
+                          >
                             Số Học Sinh
                           </th>
                           <th
                             scope="col"
-                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            className="px-4 py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400"
                           >
                             Đã Tham Gia
                           </th>
                           <th
                             scope="col"
-                            className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                            className="px-4 py-3.5 text-sm font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400"
                           >
                             Đăng ký
                           </th>
-
-                          <th scope="col" className="relative py-3.5 px-4">
-                            <span className="sr-only">Edit</span>
-                          </th>
-                        </tr>                 
+                        </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                        <tr>
-                          <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                            <div>
-                              <h2 className="font-medium text-gray-800 dark:text-white ">
-                                CT108
-                              </h2>
-                              <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                Quản Trị Hệ Thống
-                              </p>
-                            </div>
-                          </td>
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div className="flex items-center">
-                              <p className="p-3 flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
-                                4
-                              </p>
-                            </div>
-                          </td>
-                          <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                            <div className="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                              Đã Mở Lớp
-                            </div>
-                          </td>
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div>
-                              <h4 className="text-gray-700 dark:text-gray-200">
-                                QT1: Quản Trị Hệ Thống
-                              </h4>
-                              <p className="text-gray-500 dark:text-gray-400">
-                                Phòng: MT01 - Cô Nguyễn Văn A
-                              </p>
-                            </div>
-                          </td>
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div className="flex items-center">
-                              <p className="p-3 flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
-                                40
-                              </p>
-                            </div>
-                          </td>
+                        {datas &&
+                          datas.map((data, index) => {
+                            return (
+                              <tr key={index}>
+                                <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                  <div>
+                                    <h2 className="font-medium text-gray-800 dark:text-white ">
+                                      {data.data.id_subject.id_subject}
+                                    </h2>
+                                    <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                      {data.data.id_subject.subject_name}
+                                    </p>
+                                  </div>
+                                </td>
+                                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                  <div className="flex items-center justify-center">
+                                    <p className="p-3 flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
+                                      {data.data.id_subject.credit}
+                                    </p>
+                                  </div>
+                                </td>
 
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div className="flex items-center">
-                              <p className="p-3 flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
-                                30
-                              </p>
-                            </div>
-                          </td>
+                                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                  <div>
+                                    <h4 className="text-gray-700 dark:text-gray-200">
+                                      {data.data.id_class}
+                                    </h4>
+                                    <p className="text-gray-500 dark:text-gray-400">
+                                      {data.data.class_name}
+                                    </p>
+                                  </div>
+                                </td>
+                                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                  <div>
+                                    <h4 className="text-gray-700 dark:text-gray-200">
+                                      Phòng {data.data.id_room.id_room} -{" "}
+                                      {data.data.id_room.name_room}
+                                    </h4>
+                                    <p className="text-gray-700 dark:text-gray-200">
+                                      Giáo Viên: {data.data.id_teacher.degree}{" "}
+                                      {data.data.id_teacher.teacher_name}
+                                    </p>
+                                  </div>
+                                </td>
+                                <td className="px-4 py-4 text-sm whitespace-nowrap ">
+                                  <div className="flex items-center justify-center">
+                                    <p className="p-3 flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
+                                      {data.data.limit_student}
+                                    </p>
+                                  </div>
+                                </td>
 
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <button className="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                className="w-6 h-6"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                                />
-                              </svg>
-                            </button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                            <div>
-                              <h2 className="font-medium text-gray-800 dark:text-white ">
-                                CT109
-                              </h2>
-                              <p className="text-sm font-normal text-gray-600 dark:text-gray-400">
-                                Lập Trình Hướng Đối Tượng
-                              </p>
-                            </div>
-                          </td>
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div className="flex items-center">
-                              <p className="p-3 flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
-                                3
-                              </p>
-                            </div>
-                          </td>
-                          <td className="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                            <div className="inline px-3 py-1 text-sm font-normal rounded-full text-gray-500 gap-x-2 bg-gray-100/60 dark:bg-gray-800">
-                              Chưa Mở Lớp
-                            </div>
-                          </td>
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div>
-                              <h4 className="text-gray-700 dark:text-gray-200">
-                                HT1: Hướng Đối Tượng
-                              </h4>
-                              <p className="text-gray-500 dark:text-gray-400">
-                                Phòng: LT01 - Cô Nguyễn Văn B
-                              </p>
-                            </div>
-                          </td>
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div className="flex items-center">
-                              <p className="p-3 flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
-                                0
-                              </p>
-                            </div>
-                          </td>
+                                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                  <div className="flex items-center justify-center">
+                                    <p className="p-3 flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
+                                      {data.data.current_student}
+                                    </p>
+                                  </div>
+                                </td>
 
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <div className="flex items-center">
-                              <p className="p-3 flex items-center justify-center w-6 h-6 -mx-1 text-xs text-blue-600 bg-blue-100 border-2 border-white rounded-full">
-                                0
-                              </p>
-                            </div>
-                          </td>
-
-                          <td className="px-4 py-4 text-sm whitespace-nowrap">
-                            <button className="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor"
-                                className="w-6 h-6"
-                              >
-                                <path
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                                />
-                              </svg>
-                            </button>
-                          </td>
-                        </tr>
+                                <td className="px-4 py-4 text-sm whitespace-nowrap">
+                                  <div className="flex w-full justify-center">
+                                    {data &&
+                                    data.data.limit_student ==
+                                      data.data.current_student &&
+                                    !data.inClass ? (
+                                      <FaSignInAlt className=" h-5 w-5 text-black" />
+                                    ) : data.inClass ? (
+                                      <FaSignOutAlt
+                                        className="cursor-pointer h-5 w-5 text-red-600"
+                                        onClick={() =>
+                                          handleSignOut(data.data._id)
+                                        }
+                                      />
+                                    ) : (
+                                      <FaSignInAlt
+                                        className="cursor-pointer h-5 w-5 text-green-600"
+                                        onClick={() =>
+                                          handleSignIn(data.data._id)
+                                        }
+                                      />
+                                    )}
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
                       </tbody>
                     </table>
                   </div>
@@ -347,14 +428,22 @@ const subjectRegistration = () => {
               <div className="text-sm text-gray-500 dark:text-gray-400">
                 Page{" "}
                 <span className="font-medium text-gray-700 dark:text-gray-100">
-                  1 of 10
+                  {setting && setting.page_total == 0
+                    ? "Không tìm thấy kết quả!"
+                    : `1 of ${setting && setting.page_total}`}
                 </span>
               </div>
 
               <div className="flex items-center mt-4 gap-x-4 sm:mt-0">
-                <a
-                  href="#"
-                  className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+                <div
+                  onClick={() =>
+                    setUrl1((state) => ({ ...state, page: state.page - 1 }))
+                  }
+                  className={
+                    setting && (url1.page == 1 || url1.page_total == 0)
+                      ? "pointer-events-none flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+                      : "cursor-pointer flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -371,12 +460,19 @@ const subjectRegistration = () => {
                     />
                   </svg>
 
-                  <span>previous</span>
-                </a>
+                  <span>Previous</span>
+                </div>
 
-                <a
-                  href="#"
-                  className="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+                <div
+                  onClick={() =>
+                    setUrl1((state) => ({ ...state, page: state.page + 1 }))
+                  }
+                  className={
+                    setting &&
+                    (setting.page_total == url1.page || setting.page_total == 0)
+                      ? "pointer-events-none flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+                      : "cursor-pointer flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
+                  }
                 >
                   <span>Next</span>
 
@@ -394,7 +490,7 @@ const subjectRegistration = () => {
                       d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
                     />
                   </svg>
-                </a>
+                </div>
               </div>
             </div>
           </section>

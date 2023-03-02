@@ -18,7 +18,7 @@ export default function Login() {
       if (sessionStorage.getItem("role") == "Student") {
         router.push("/dashboard");
       } else {
-        //router.push('/admin');
+        router.push('/admin');
       }
     }
   }, []);
@@ -41,9 +41,9 @@ export default function Login() {
         }
       })
       .catch(function (error) {
-        const err = error.response.data.message;
-        console.log(err)
-        warn(err)
+        //const err = error.response.data.message || error;
+        //console.log(err)
+        warn("Đăng nhập không thành công. Vui lòng kiểm tra lại tài khoản và mật khẩu!");
       });
   };
 
