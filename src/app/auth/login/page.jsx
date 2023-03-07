@@ -28,7 +28,7 @@ export default function Login() {
       user_name: userName,
       pass_word: passWord,
     };
-
+    console.log(1);
     axios
       .post("http://localhost:3030/auth/login", data)
       .then((response) => {
@@ -37,7 +37,7 @@ export default function Login() {
         if (response.data.role == "Student") {
           router.push("/dashboard");
         } else {
-          //router.push('/admin');
+          router.push('/admin');
         }
       })
       .catch(function (error) {
