@@ -1,6 +1,28 @@
+"use client";
+
 import Image from "next/image";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const StudentInfo = () => {
+  const [student, setStudent] = useState([]);
+
+  useEffect(() => {
+    const url = "http://localhost:3030/user/student";
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res)
+        setStudent(res.data.id_user)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },[]);
   return (
     <>
       <div className="p-4 sm:ml-64 flex flex-row">
@@ -8,11 +30,11 @@ const StudentInfo = () => {
           <div className="flex items-center p-4 mt-10">
             <div className="relative flex flex-col items-center w-full">
               <div className="h-24 w-24 md rounded-full relative avatar flex items-end justify-end min-w-max absolute -top-16 flex ">
-                <Image
+                <img
                   className="h-24 w-24 md rounded-full relative"
-                  src="https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg"
+                  src={`http:localhost:3030/images/${student.img}`}
                   alt=""
-                  fill={true}
+                  // fill={true}
                 />
                 <div className="absolute"></div>
               </div>
@@ -37,27 +59,27 @@ const StudentInfo = () => {
                 <tbody>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">Name</td>
-                    <td className="px-2 py-2">Tin Nguyen</td>
+                    <td className="px-2 py-2">{student && student.last_name} {student.first_name}</td>
                   </tr>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">
                       Student Id
                     </td>
-                    <td className="px-2 py-2">Abc123</td>
+                    <td className="px-2 py-2">{student && student.id_student}</td>
                   </tr>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">Phone</td>
-                    <td className="px-2 py-2">+84 6969696969</td>
+                    <td className="px-2 py-2">{student && student.phone}</td>
                   </tr>
                   <tr>
-                    <td className="px-2 py-2 text-gray-500 font-bold">Email</td>
-                    <td className="px-2 py-2">tinnguyen@gmail.com</td>
+                    <td className="px-2 py-2 text-gray-500 font-bold">Date of birth</td>
+                    <td className="px-2 py-2">{student && student.birth_day}</td>
                   </tr>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">
                       Address
                     </td>
-                    <td className="px-2 py-2">Long Thanh, Dong Nai</td>
+                    <td className="px-2 py-2">{student && student.address}</td>
                   </tr>
                 </tbody>
               </table>
@@ -79,7 +101,7 @@ const StudentInfo = () => {
                     type="text"
                     className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
                   >
-                    Nguyen
+                    {student && student.first_name}
                   </span>
                 </div>
                 <div className="w-full md:w-1/2 px-3 mb-6">
@@ -90,7 +112,7 @@ const StudentInfo = () => {
                     type="text"
                     className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
                   >
-                    Tin
+                    {student && student.last_name}
                   </span>
                 </div>
                 <div className="w-full md:w-1/2 px-3 mb-6">
@@ -101,7 +123,7 @@ const StudentInfo = () => {
                     type="text"
                     className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
                   >
-                    Abc123
+                    {student && student.id_student}
                   </span>
                 </div>
                 <div className="w-full md:w-1/2 px-3 mb-6">
@@ -112,7 +134,7 @@ const StudentInfo = () => {
                     type="text"
                     className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
                   >
-                    +84 999999999
+                    {student && student.phone}
                   </span>
                 </div>
                 <div className="w-full md:w-1/2 px-3 mb-6">
@@ -124,7 +146,7 @@ const StudentInfo = () => {
                       type="text"
                       className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
                     >
-                      01/01/2001
+                     {student && student.birth_day}
                     </span>
                   </div>
                 </div>
@@ -137,7 +159,7 @@ const StudentInfo = () => {
                       type="text"
                       className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
                     >
-                      Long Thanh, Dong Nai, Viet Nam
+                      {student && student.address}
                     </span>
                   </div>
                 </div>
@@ -149,7 +171,7 @@ const StudentInfo = () => {
                     type="text"
                     className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
                   >
-                    tin@gmail.com
+                    {student && student.email}
                   </span>
                 </div>
                 <div className="w-full md:w-1/2 px-3 mb-6">

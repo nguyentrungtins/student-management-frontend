@@ -23,10 +23,10 @@ const subjectRegistration = () => {
       if (sessionStorage.getItem("role") == "Student") {
         router.push("/dashboard/subject-registration");
       } else {
-        router.push('/auth/login');
+        router.push("/auth/login");
       }
     }
-  },[])
+  }, []);
   //console.log(datas);
   useEffect(() => {
     const url = `http://localhost:3030/class/get/?page=${url1.page}&limit=${url1.limit}&select=${url1.select}&search=${url1.search}`;
