@@ -18,7 +18,7 @@ export default function Login() {
       if (sessionStorage.getItem("role") == "Student") {
         router.push("/dashboard");
       } else {
-        //router.push('/admin');
+        router.push("/admin");
       }
     }
   }, []);
@@ -28,7 +28,7 @@ export default function Login() {
       user_name: userName,
       pass_word: passWord,
     };
-
+    console.log(1);
     axios
       .post("http://localhost:3030/auth/login", data)
       .then((response) => {
@@ -37,29 +37,24 @@ export default function Login() {
         if (response.data.role == "Student") {
           router.push("/dashboard");
         } else {
-          //router.push('/admin');
+          router.push("/admin");
         }
       })
       .catch(function (error) {
-        const err = error.response.data.message;
-        console.log(err)
-        warn(err)
+        //const err = error.response.data.message || error;
+        //console.log(err)
+        warn(
+          "Đăng nhập không thành công. Vui lòng kiểm tra lại tài khoản và mật khẩu!"
+        );
       });
   };
 
   return (
-<<<<<<< HEAD
-    <div className="bg-[#F0F1F8] w-screen h-screen flex justify-center items-center">
-      <div className="flex justify-center p-4 w-[1100px] h-[700px] rounded-md">
-        <div className="w-1/2 p-3 bg-primary flex items-center rounded-l-2xl drop-shadow-xl">
-          <Image src={Content} />
-=======
     <div className="bg-slate-50 w-screen h-screen flex justify-center items-center">
       <Toastify />
       <div className="flex justify-center p-4 w-[1100px] h-[700px] rounded-md">
         <div className="w-1/2 p-3 bg-[#365DC1] flex items-center rounded-l-2xl drop-shadow-xl">
           <Image src={Content} alt="img" />
->>>>>>> d70e2d186758ab8287ba9e841814b63df9945355
         </div>
         <div className="w-1/2 p-3 bg-white drop-shadow-xl rounded-r-2xl pt-16">
           <div className="p-5 flex justify-center">
@@ -94,14 +89,10 @@ export default function Login() {
               <FaLock className="absolute left-4 text-gray-500" />
             </div>
           </div>
-<<<<<<< HEAD
-          <div className="rounded-xl font-semibold mb-10 p-2 bg-primary text-white w-4/6 ml-auto mr-auto text-center hover:cursor-pointer">
-=======
           <div
             onClick={handleLogin}
             className="rounded-xl font-semibold mb-5 p-2 bg-sky-700 text-white w-4/6 ml-auto mr-auto text-center hover:cursor-pointer"
           >
->>>>>>> d70e2d186758ab8287ba9e841814b63df9945355
             Login
           </div>
           <div className="text-center text-sm font-light">

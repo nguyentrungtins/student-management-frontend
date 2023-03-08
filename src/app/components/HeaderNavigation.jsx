@@ -1,3 +1,4 @@
+"use client";
 import { GrNotification, AiOutlineSetting, GiChaingun } from "../icons.js";
 function HeaderNavigation({ title = "Title", desc = "Descriptions" }) {
   return (
