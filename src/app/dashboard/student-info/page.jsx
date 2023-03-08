@@ -1,21 +1,40 @@
+"use client";
+
 import Image from "next/image";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const StudentInfo = () => {
- 
+  const [student, setStudent] = useState([]);
+
+  useEffect(() => {
+    const url = "http://localhost:3030/user/student";
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res)
+        setStudent(res.data.id_user)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },[]);
   return (
     <>
       <div className="p-4 sm:ml-64 flex flex-row">
-        <div className="basis-1/3 border-x-2">
-          <div className="w-full card__media"></div>
-          <div className="flex items-center p-4 mt-5"></div>
-          <div className="flex items-center p-4 mt-5">
+        <div className="basis-1/3 border-x-2 ">
+          <div className="flex items-center p-4 mt-10">
             <div className="relative flex flex-col items-center w-full">
               <div className="h-24 w-24 md rounded-full relative avatar flex items-end justify-end min-w-max absolute -top-16 flex ">
-                <Image
+                <img
                   className="h-24 w-24 md rounded-full relative"
-                  src="https://marketplace.canva.com/EAFEits4-uw/1/0/1600w/canva-boy-cartoon-gamer-animated-twitch-profile-photo-oEqs2yqaL8s.jpg"
+                  src={`http:localhost:3030/images/${student.img}`}
                   alt=""
-                  fill={true}
+                  // fill={true}
                 />
                 <div className="absolute"></div>
               </div>
@@ -36,31 +55,31 @@ const StudentInfo = () => {
                   </button>
                 </div>
               </div>
-              <table className="text-sm my-3">
+              <table className="text-sm my-3 bg-gray-100">
                 <tbody>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">Name</td>
-                    <td className="px-2 py-2">Tin Nguyen</td>
+                    <td className="px-2 py-2">{student && student.last_name} {student.first_name}</td>
                   </tr>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">
                       Student Id
                     </td>
-                    <td className="px-2 py-2">Abc123</td>
+                    <td className="px-2 py-2">{student && student.id_student}</td>
                   </tr>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">Phone</td>
-                    <td className="px-2 py-2">+84 6969696969</td>
+                    <td className="px-2 py-2">{student && student.phone}</td>
                   </tr>
                   <tr>
-                    <td className="px-2 py-2 text-gray-500 font-bold">Email</td>
-                    <td className="px-2 py-2">tinnguyen@gmail.com</td>
+                    <td className="px-2 py-2 text-gray-500 font-bold">Date of birth</td>
+                    <td className="px-2 py-2">{student && student.birth_day}</td>
                   </tr>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">
                       Address
                     </td>
-                    <td className="px-2 py-2">Long Thanh, Dong Nai</td>
+                    <td className="px-2 py-2">{student && student.address}</td>
                   </tr>
                 </tbody>
               </table>
@@ -69,99 +88,103 @@ const StudentInfo = () => {
         </div>
         <div className="basis-2/3">
           <div className="inputs w-full max-w-2xl p-6 mx-auto">
-            <h2 className="text-xl text-gray-900">Student Information</h2>
+            <h2 className="text-xl text-gray-900 font-semibold">
+              Student Information
+            </h2>
             <form className="mt-6 border-t border-gray-400 pt-4">
               <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
                     First name
                   </label>
-                  <input
-                    className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-500"
+                  <span
                     type="text"
-                    value="Nguyen"
-                    readonly
-                  />
+                    className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                  >
+                    {student && student.first_name}
+                  </span>
                 </div>
                 <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
                     Last name
                   </label>
-                  <input
-                    className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-500"
+                  <span
                     type="text"
-                    value="Tin"
-                    readonly
-                  />
+                    className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                  >
+                    {student && student.last_name}
+                  </span>
                 </div>
                 <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
                     Student Id
                   </label>
-                  <input
-                    className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-500"
+                  <span
                     type="text"
-                    value="Abc123"
-                    readonly
-                  />
+                    className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                  >
+                    {student && student.id_student}
+                  </span>
                 </div>
                 <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
                     Phone number
                   </label>
-                  <input
-                    className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-500"
+                  <span
                     type="text"
-                    value="+84 999999999"
-                    readonly
-                  />
+                    className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                  >
+                    {student && student.phone}
+                  </span>
                 </div>
                 <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
-                    Email
-                  </label>
-                  <input
-                    className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-500"
-                    type="text"
-                    value="tinnguyen@gmail.com"
-                    readonly
-                  />
-                </div>
-                <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
-                    Password
-                  </label>
-                  <button className="appearance-none bg-gray-200 text-gray-900 px-2 shadow-sm border border-gray-400 rounded-md ">
-                    Change your password
-                  </button>
-                </div>
-                <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
                     Date of birth
                   </label>
                   <div className="flex-shrink w-full inline-block relative">
-                    <input
-                      className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-500"
+                    <span
                       type="text"
-                      value="01/01/2001"
-                      readonly
-                    />
+                      className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                    >
+                     {student && student.birth_day}
+                    </span>
                   </div>
                 </div>
-                <div className="w-full md:w-1/2 px-3 mb-6"> 
-                  <label className="block tracking-wide text-gray-700 text-xs font-bold mb-2">
+                <div className="w-full md:w-1/2 px-3 mb-6">
+                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
                     Address
                   </label>
                   <div className="flex-shrink w-full inline-block relative">
-                    <input
-                      className="appearance-none block w-full bg-white text-gray-700 border border-gray-400 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-500"
+                    <span
                       type="text"
-                      value="Long Thanh, Dong Nai, Viet Nam"
-                      readonly
-                    />
+                      className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                    >
+                      {student && student.address}
+                    </span>
                   </div>
                 </div>
-                
+                <div className="w-full md:w-1/2 px-3 mb-6">
+                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
+                    Email
+                  </label>
+                  <span
+                    type="text"
+                    className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                  >
+                    {student && student.email}
+                  </span>
+                </div>
+                <div className="w-full md:w-1/2 px-3 mb-6">
+                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
+                    Password
+                  </label>
+                  <button
+                    type="button"
+                    className="inline-block rounded bg-primary px-4 py-1 text-sm  leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                  >
+                    Change your password
+                  </button>
+                </div>
               </div>
             </form>
           </div>
