@@ -10,12 +10,9 @@
   },
   "dependencies": {
     "@next/font": "^13.1.6",
-<<<<<<< HEAD
     "date-fns": "^2.29.3",
-=======
     "axios": "^1.3.4",
     "follow-redirects": "^1.15.2",
->>>>>>> d70e2d186758ab8287ba9e841814b63df9945355
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
