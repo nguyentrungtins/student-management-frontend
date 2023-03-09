@@ -34,7 +34,7 @@ const schedules = () => {
     <div className="ml-64">
       <HeaderNavigation
         title="Thời Khóa Biểu"
-        desc="Đăng ký môn học cho học kỳ I 2022-2203"
+        desc="Thời khóa biểu - học kỳ I 2022-2203"
       />
       <div className="flex mt-4 h-screen w-full ">
         <div className="w-9/12 h-screen rounded-xl p-4">

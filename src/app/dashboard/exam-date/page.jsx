@@ -33,13 +33,13 @@ const ExamDate = () => {
   return (
     <div className="ml-64">
       <HeaderNavigation
-        title="Thời Khóa Biểu"
-        desc="Đăng ký môn học cho học kỳ I 2022-2203"
+        title="Lịch Thi"
+        desc="Lịch thi cho học kỳ I 2022-2203"
       />
       <div className="flex mt-4 h-screen w-full ">
         <div className="w-9/12 h-screen rounded-xl p-4">
           <div className="flex justify-between items-center pt-2 pb-6 px-4">
-            <h2 className="text-xl text-gray-800 font-semibold">Lịch Học</h2>
+            <h2 className="text-xl text-gray-800 font-semibold">Lịch Thi</h2>
             <div className="flex justify-between items-center h-full w-20 border-orange-50">
               <HiChevronLeft
                 className="cursor-pointer font-normal text-gray-500"

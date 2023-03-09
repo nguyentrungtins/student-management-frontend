@@ -104,12 +104,13 @@ export default function WeekCalendar({ schedule = [] }) {
       <div className="grid grid-cols-[70px_auto] grid-rows-[auto-auto] grid-flow-dense">
         <div className=""></div>
         <div className="grid grid-cols-6 bg-gray-200 py-5 rounded-t-xl">
-          {weekDay.map((day) => (
+          {weekDay.map((day, i) => (
             <div
               className={classNames(
                 todayString == day.date && "text-primary",
                 "flex flex-col justify-center items-center"
               )}
+              key={i}
             >
               <p className="text-xl font-bold">{day.date}</p>
               <p className="text-sm font-semibold">{day.wdate}</p>
@@ -132,15 +133,15 @@ export default function WeekCalendar({ schedule = [] }) {
           </div>
         </div>
         <div className="grid grid-cols-6 bg-white divide-x divide-gray-100 rounded-b-xl">
-          {scheduleHtml.map((s) => (
-            <div className="grid grid-rows-4 divide-y divide-gray-100">
-              {s.map((a) =>
+          {scheduleHtml.map((s, si) => (
+            <div key={si} className="grid grid-rows-4 divide-y divide-gray-100">
+              {s.map((a, i) =>
                 a ? (
-                  <span>
+                  <span key={i}>
                     <SheetItem className={a.className} room={a.room} />
                   </span>
                 ) : (
-                  <span className="h-40"></span>
+                  <span className="h-40" key={i}></span>
                 )
               )}
             </div>
