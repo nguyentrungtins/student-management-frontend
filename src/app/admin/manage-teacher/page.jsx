@@ -13,7 +13,7 @@ const manageTeacher = () => {
     buttonOpen: 0,
   });
   const [newTeacher, setNewTeacher] = useState({
-    id_teacher: null,
+    id_teacher: "",
     degree: "Giáo viên",
     teacher_name: "",
     teacher_age: 22,
@@ -106,7 +106,7 @@ const manageTeacher = () => {
 
         setAllTeacher(res.data.teacher);
         setNewTeacher({
-          id_teacher: null,
+          id_teacher: "",
           degree: "Giáo viên",
           teacher_name: "",
           teacher_age: 22,
@@ -275,7 +275,7 @@ const manageTeacher = () => {
                         <h3 className="w-2/4 mt-1 text-sm text-gray-600 dark:text-gray-400">
                           Trình độ
                         </h3>
-                        <div class="rounded-lg w-full relative border border-gray-300 text-gray-800 bg-white shadow-lg">
+                        <div className="rounded-lg w-full relative border border-gray-300 text-gray-800 bg-white shadow-lg">
                           <select
                             className="px-8 rounded-lg appearance-none w-full py-1 bg-white"
                             value={newTeacher.degree}
@@ -295,9 +295,9 @@ const manageTeacher = () => {
                               Tiến sĩ khoa học
                             </option>
                           </select>
-                          <div class="rounded-lg pointer-events-none absolute right-0 top-0 bottom-0 flex items-center px-2 text-gray-700 border-l">
+                          <div className="rounded-lg pointer-events-none absolute right-0 top-0 bottom-0 flex items-center px-2 text-gray-700 border-l">
                             <svg
-                              class="h-4 w-4"
+                              className="h-4 w-4"
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 20 20"
                             >
@@ -317,11 +317,11 @@ const manageTeacher = () => {
                           onChange={(event) =>
                             setNewTeacher((state) => ({
                               ...state,
-                              id_teacher: event.target.value,
+                              id_teacher: event.target.value.toUpperCase(),
                             }))
                           }
                           type="text"
-                          placeholder="Nhập text..."
+                          placeholder="Ex: S000"
                           className="block py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
                       </div>
@@ -356,7 +356,7 @@ const manageTeacher = () => {
                           onChange={(event) =>
                             setNewTeacher((state) => ({
                               ...state,
-                              teacher_age: event.target.value,
+                              teacher_age: Number(event.target.value),
                             }))
                           }
                           required

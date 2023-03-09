@@ -101,7 +101,7 @@ const manageSubject = () => {
 
   // update 1 môn học
   const handleSubmitUpdate = () => {
-    //console.log(newSubject)
+    console.log(newSubject);
     const urlQuery = `http://localhost:3030/subject/update?page=${filterQuey.page}&limit=${filterQuey.limit}&search=${filterQuey.search}`;
     axios
       .post(urlQuery, newSubject, {
@@ -124,7 +124,7 @@ const manageSubject = () => {
         });
       })
       .catch(function (err) {
-        console.log(err)
+        console.log(err);
         warn(err.response.data.message) || warn("Fail!");
       });
   };
@@ -360,7 +360,7 @@ const manageSubject = () => {
                           onChange={(event) =>
                             setNewSubject((state) => ({
                               ...state,
-                              credit: event.target.value,
+                              credit: Number(event.target.value),
                             }))
                           }
                           placeholder="Nhập text..."
@@ -379,7 +379,7 @@ const manageSubject = () => {
                           onChange={(event) =>
                             setNewSubject((state) => ({
                               ...state,
-                              learn: event.target.value,
+                              learn: Number(event.target.value),
                             }))
                           }
                           placeholder="Nhập text..."
