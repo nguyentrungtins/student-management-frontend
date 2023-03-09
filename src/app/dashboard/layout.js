@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { GiAchievement, GiNotebook } from "react-icons/gi";
 import { RxDashboard, RxCalendar } from "react-icons/rx";
 import { BiSidebar, BiLogOut, BiUser } from "react-icons/bi";
 import Logo from "../../../public/Logo.svg";
+import Loading from "./loading";
 const DashboardLayout = ({ children }) => {
   return (
     <aside className="px-6">
@@ -133,7 +134,7 @@ const DashboardLayout = ({ children }) => {
           </a>
         </div>
       </div>
-      <>{children}</>
+      <Suspense fallback={<Loading />}>{children}</Suspense>
     </aside>
   );
 };
