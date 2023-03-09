@@ -68,7 +68,6 @@ export default function Calendar() {
   let [selectedDay, setSelectedDay] = useState(today);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
@@ -135,7 +134,7 @@ export default function Calendar() {
                       isEqual(day, selectedDay) && "text-white",
                       !isEqual(day, selectedDay) &&
                         isToday(day) &&
-                        "text-red-500",
+                        "text-white",
                       !isEqual(day, selectedDay) &&
                         !isToday(day) &&
                         isSameMonth(day, firstDayCurrentMonth) &&
@@ -144,7 +143,7 @@ export default function Calendar() {
                         !isToday(day) &&
                         !isSameMonth(day, firstDayCurrentMonth) &&
                         "text-gray-400",
-                      isEqual(day, selectedDay) && isToday(day) && "bg-red-500",
+                      isEqual(day, selectedDay) && isToday(day) && "bg-primary",
                       isEqual(day, selectedDay) &&
                         !isToday(day) &&
                         "bg-gray-900",
