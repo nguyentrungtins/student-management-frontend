@@ -17,7 +17,7 @@ import admin from "../../../public/admin.png";
 
 const DashboardLayout = ({ children }) => {
   return (
-    <aside className="p-[25px]">
+    <aside className="px-6">
       <button
         data-drawer-target="default-sidebar"
         data-drawer-toggle="default-sidebar"
