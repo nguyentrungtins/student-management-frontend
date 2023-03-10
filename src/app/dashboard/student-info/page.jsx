@@ -6,6 +6,19 @@ import axios from "axios";
 
 const StudentInfo = () => {
   const [student, setStudent] = useState([]);
+  const [show, setShow] = useState(false);
+  const [password, setPassword] = useState("");
+  const [newPass, setNewPass] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+
+  const handleSubmit = () => {
+    if (newPass == confirmPass) {
+      axios.post()
+      .then()
+    } else {
+      alert('password doesnt match!')
+    }
+  }
 
   useEffect(() => {
     const url = "http://localhost:3030/user/student";
@@ -16,13 +29,13 @@ const StudentInfo = () => {
         },
       })
       .then((res) => {
-        console.log(res)
-        setStudent(res.data.id_user)
+        console.log(res);
+        setStudent(res.data.id_user);
       })
       .catch((err) => {
         console.log(err);
       });
-  },[]);
+  }, []);
   return (
     <>
       <div className="p-4 sm:ml-64 flex flex-row">
@@ -59,21 +72,29 @@ const StudentInfo = () => {
                 <tbody>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">Name</td>
-                    <td className="px-2 py-2">{student && student.last_name} {student.first_name}</td>
+                    <td className="px-2 py-2">
+                      {student && student.last_name} {student.first_name}
+                    </td>
                   </tr>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">
                       Student Id
                     </td>
-                    <td className="px-2 py-2">{student && student.id_student}</td>
+                    <td className="px-2 py-2">
+                      {student && student.id_student}
+                    </td>
                   </tr>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">Phone</td>
                     <td className="px-2 py-2">{student && student.phone}</td>
                   </tr>
                   <tr>
-                    <td className="px-2 py-2 text-gray-500 font-bold">Date of birth</td>
-                    <td className="px-2 py-2">{student && student.birth_day}</td>
+                    <td className="px-2 py-2 text-gray-500 font-bold">
+                      Date of birth
+                    </td>
+                    <td className="px-2 py-2">
+                      {student && student.birth_day}
+                    </td>
                   </tr>
                   <tr>
                     <td className="px-2 py-2 text-gray-500 font-bold">
@@ -146,7 +167,7 @@ const StudentInfo = () => {
                       type="text"
                       className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
                     >
-                     {student && student.birth_day}
+                      {student && student.birth_day}
                     </span>
                   </div>
                 </div>
@@ -179,11 +200,51 @@ const StudentInfo = () => {
                     Password
                   </label>
                   <button
+                    onClick={() => setShow((state) => !state)}
                     type="button"
                     className="inline-block rounded bg-primary px-4 py-1 text-sm  leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                   >
-                    Change your password
+                    Change password
                   </button>
+                  <div className={show ? "block w-40 py-4" : "hidden"}>
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      class="appearance-none block w-40 text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                      placeholder="password"
+                      required
+                    ></input>
+
+                    <div className="py-2">
+                      <input
+                        type="password"
+                        value={newPass}
+                        onChange={(e) => setNewPass(e.target.value)}
+                        class="appearance-none block w-40 text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                        placeholder="new password"
+                        required
+                      ></input>
+                    </div>
+
+                    <input
+                      type="password"
+                      value={confirmPass}
+                      onChange={(e) => setConfirmPass(e.target.value)}
+                      class="appearance-none block w-40 text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                      placeholder="confirm password"
+                      required
+                    ></input>
+                    <div className="py-2">
+                      <button
+                        onClick={handleSubmit }
+                        type="button"
+                        className="inline-block rounded bg-primary px-4 py-1 text-sm  leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                      >
+                        OK
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </form>
