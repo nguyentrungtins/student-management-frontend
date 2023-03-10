@@ -5,6 +5,8 @@ import {
   getDay,
   getMonth,
   getYear,
+  monthsToQuarters,
+  setMonth,
   startOfToday,
   startOfWeek,
 } from "date-fns";
@@ -80,14 +82,26 @@ const calSlot = (schedule) => {
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-export default function WeekCalendar({ schedule = [] }) {
+export default function WeekCalendar({ schedule = [], isExam = false }) {
   // console.log("schedule", schedule);
   const scheduleHtml = calSlot(schedule);
-  const weekDay = [];
-
   const today = startOfToday();
+  const weekDay = [];
+  const quater = monthsToQuarters(getMonth(today));
+  let examDay = today;
+  let startWeek = startOfWeek(today, { weekStartsOn: 1 });
+  if (isExam) {
+    if (quater == 1) {
+      examDay = new Date(getYear(today), 4, 20);
+    } else {
+      examDay = new Date(getYear(today), 11, 20);
+    }
+    startWeek = startOfWeek(examDay, { weekStartsOn: 1 });
+    console.log(examDay);
+  }
+
   const todayString = getDate(today);
-  const startWeek = startOfWeek(today, { weekStartsOn: 1 });
+
   [...Array(6)].map((x, i) => {
     return weekDay.push({
       date: getDate(startWeek) + i,
