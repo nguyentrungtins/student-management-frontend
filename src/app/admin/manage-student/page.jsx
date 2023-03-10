@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import {
@@ -8,11 +8,12 @@ import {
 } from "react-icons/ai";
 import { GrUpdate } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
+import { BsSearch } from "react-icons/bs";
 
 const ManageStudent = () => {
   const [isForm, setIsForm] = useState(false);
   return (
-    <>
+    
       <div className="p-4 sm:ml-64 flex flex-row">
         <div className="container max-w-7xl mx-auto mt-8">
           <div className="mb-4">
@@ -20,21 +21,35 @@ const ManageStudent = () => {
               {" "}
               Manage student
             </h1>
+            
 
-            <div className="flex justify-end">
-              <button className="px-4 py-2 rounded-md bg-primary text-sky-100 hover:bg-sky-600"
-              onClick={() =>
-                setIsForm((state) => !state)
-              }>
-                Add new student
-              </button>
-            </div>
-          </div>
-          <div className={
-                  isForm
-                    ? "mt-12 transition-all duration-1000 border-2 rounded-tl-2xl rounded-br-2xl border-gray-700 p-6"
-                    : "mt-12 hidden"
-                }>
+            <div className="flex justify-end items-center mt-4 gap-x-3">
+                <button
+                  onClick={() => setIsForm((state) => !state)}
+                  className="px-4 py-2 mr-5 rounded-md bg-primary text-sky-100 hover:bg-sky-600"
+                >
+                  Add student
+                </button>
+                <div className="relative flex items-center mt-4 md:mt-0">
+                  <span className="absolute pl-3">
+                    <BsSearch />
+                  </span>
+
+                  <input
+                    type="text"
+                    value=""
+                    placeholder="Search"
+                    className="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+              </div>
+          <div
+            className={
+              isForm
+                ? "mt-12 transition-all duration-1000 border-2 rounded-tl-2xl rounded-br-2xl border-gray-700 p-6"
+                : "mt-12 hidden"
+            }
+          >
             <form onSubmit="">
               <h3>Thông tin chi tiết</h3>
               <div className="flex">
@@ -170,16 +185,6 @@ const ManageStudent = () => {
           </div>
           <div className="flex flex-col">
             <div className="overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-              <div className="flex ">
-                <div className="my-3 xl:w-96">
-                  <input
-                    type="search"
-                    className="relative m-0 block min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-1.5 text-base font-normal text-neutral-700 outline-none transition duration-300 ease-in-out focus:border-primary-600 focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200"
-                    id="exampleSearch"
-                    placeholder="Search"
-                  />
-                </div>
-              </div>
               <div className="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
                 <table className="min-w-full">
                   <thead>
@@ -312,7 +317,7 @@ const ManageStudent = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default ManageStudent;
