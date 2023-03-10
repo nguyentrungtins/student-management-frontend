@@ -1,13 +1,14 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { GiAchievement, GiNotebook } from "react-icons/gi";
-import { RxDashboard, RxCalendar, RxDotsHorizontal } from "react-icons/rx";
+import { RxDashboard, RxCalendar } from "react-icons/rx";
 import { BiSidebar, BiLogOut, BiUser } from "react-icons/bi";
 import Logo from "../../../public/Logo.svg";
+import Loading from "./loading";
 const DashboardLayout = ({ children }) => {
   return (
-    <aside className="p-[25px]">
+    <aside className="px-6">
       <button
         data-drawer-target="default-sidebar"
         data-drawer-toggle="default-sidebar"
@@ -30,7 +31,6 @@ const DashboardLayout = ({ children }) => {
           ></path>
         </svg>
       </button>
-
       <div
         id="default-sidebar"
         className="fixed top-0 left-0 z-40 bg-white w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
@@ -38,11 +38,11 @@ const DashboardLayout = ({ children }) => {
       >
         <div className="flex flex-col justify-between h-full px-3 py-[25px] overflow-y-auto  dark:bg-gray-800">
           <Link href={"/"}>
-            <div className="relative w-5/6 h-14">
+            <div className="relative w-8/12 ml-5 h-10">
               <Image src={Logo} alt="Logo Images" fill={true} />
             </div>
           </Link>
-          <ul className="flex flex-col flex-1 gap-2 pt-10 pl-5">
+          <ul className="flex flex-col flex-1 gap-2 pt-14 pl-5">
             <li>
               <a
                 href="#"
@@ -107,7 +107,7 @@ const DashboardLayout = ({ children }) => {
           </ul>
           <Link
             href="#"
-            className="flex h-20 w-full gap-3 items-center pl-5 rounded-lg hover:bg-gray-100"
+            className="flex h-20 mx-4 gap-3 items-center pl-2 rounded-lg hover:bg-gray-100"
           >
             <div className="relative overflow-hidden w-11 h-11 rounded-full">
               <Image
@@ -126,7 +126,7 @@ const DashboardLayout = ({ children }) => {
             </div>
           </Link>
           <a
-            className="flex items-center justify-center gap-5 mt-5 mx-3 h-10 rounded-lg hover:bg-gray-200 bg-gray-100 text-gray-600 hover:text-gray-900"
+            className="flex items-center justify-center gap-5 mt-5 mx-5 h-10 rounded-lg hover:bg-gray-200 bg-gray-100 text-gray-600 hover:text-gray-900"
             href="#"
           >
             <BiLogOut className="flex-shrink-0 w-5 h-5 transition duration-75 dark:text-gray-400 " />
@@ -134,7 +134,7 @@ const DashboardLayout = ({ children }) => {
           </a>
         </div>
       </div>
-      <>{children}</>
+      <Suspense fallback={<Loading />}>{children}</Suspense>
     </aside>
   );
 };

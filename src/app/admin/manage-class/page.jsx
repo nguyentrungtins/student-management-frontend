@@ -7,6 +7,7 @@ import {
   FaTrash,
   FaRegCheckCircle,
   FaRegCircle,
+  FaRedoAlt,
 } from "react-icons/fa";
 import axios from "axios";
 import { GrUpdate } from "react-icons/gr";
@@ -34,7 +35,7 @@ const manageClass = () => {
     id_subject: "",
     id_teacher: "",
     id_room: "",
-    limit_student: 0,
+    limit_student: 1,
     current_student: 0,
   });
 
@@ -86,7 +87,8 @@ const manageClass = () => {
         //console.log(res.data.class);
       })
       .catch(function (err) {
-        warn(err.response.data.message);
+        //console.log(err);
+        warn(err.response.data.message) || warn("Don't correct format!");
       });
     e.preventDefault();
   };
@@ -127,6 +129,26 @@ const manageClass = () => {
     });
   };
 
+  const handleResetClass = (id) => {
+    const data = {
+      id: id,
+    };
+    const urlQuery = `http://localhost:3030/class/reset?page=${filterQuey.page}&limit=${filterQuey.limit}&search=${filterQuey.search}`;
+    axios
+      .post(urlQuery, data, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      })
+      .then((res) => {
+        success("Success!");
+        setAllClass(res.data.class);
+      })
+      .catch(function (err) {
+        warn(err.response.data.message);
+      });
+  };
+
   const handleSubmitUpdate = () => {
     const urlQuery = `http://localhost:3030/class/update?page=${filterQuey.page}&limit=${filterQuey.limit}&search=${filterQuey.search}`;
     //console.log(newClass)
@@ -158,6 +180,31 @@ const manageClass = () => {
       })
       .catch(function (err) {
         warn(err.response.data.message);
+      });
+  };
+
+  const handleDeleteClass = (id) => {
+    const data = {
+      id_class: id,
+    };
+    axios
+      .post("http://localhost:3030/class/delete", data, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      })
+      .then((res) => {
+        success("Success!");
+        setFilterQuey({
+          page: 1,
+          limit: 10,
+          search: "",
+        });
+        //console.log(res.data);
+      })
+      .catch(function (err) {
+        console.log(err);
+        //console.log("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!");
       });
   };
   return (
@@ -257,7 +304,7 @@ const manageClass = () => {
               <div
                 className={
                   isForm.isOpen
-                    ? "mt-12 transition-all duration-1000"
+                    ? "mt-12 transition-all duration-1000 border-2 rounded-tl-2xl rounded-br-2xl border-gray-700 p-6"
                     : "mt-12 hidden"
                 }
               >
@@ -274,13 +321,13 @@ const manageClass = () => {
                           onChange={(event) =>
                             setNewClass((state) => ({
                               ...state,
-                              id_class: event.target.value,
+                              id_class: event.target.value.toUpperCase(),
                             }))
                           }
                           readOnly={isForm.buttonOpen == 2 ? true : false}
                           type="text"
                           required
-                          placeholder="Ex: XX000"
+                          placeholder="Ex: ID000"
                           className="block py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
                       </div>
@@ -311,6 +358,7 @@ const manageClass = () => {
                         <input
                           type="number"
                           required
+                          min={1}
                           value={newClass.limit_student}
                           onChange={(event) =>
                             setNewClass((state) => ({
@@ -333,10 +381,10 @@ const manageClass = () => {
                           onChange={(event) =>
                             setNewClass((state) => ({
                               ...state,
-                              id_subject: event.target.value,
+                              id_subject: event.target.value.toUpperCase(),
                             }))
                           }
-                          placeholder="Nhập text..."
+                          placeholder="Ex: XX000"
                           className="block py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
                       </div>
@@ -353,10 +401,10 @@ const manageClass = () => {
                           onChange={(event) =>
                             setNewClass((state) => ({
                               ...state,
-                              id_teacher: event.target.value,
+                              id_teacher: event.target.value.toUpperCase(),
                             }))
                           }
-                          placeholder="Nhập text..."
+                          placeholder="Ex: S000"
                           className="block py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         />
                       </div>
@@ -371,7 +419,7 @@ const manageClass = () => {
                             onChange={(event) =>
                               setNewClass((state) => ({
                                 ...state,
-                                id_room: event.target.value,
+                                id_room: event.target.value.toUpperCase(),
                               }))
                             }
                             id="frm-whatever"
@@ -565,8 +613,10 @@ const manageClass = () => {
                                       {class1.id_room.name_room}
                                     </h4>
                                     <p className="text-gray-700 dark:text-gray-200">
-                                      {class1.id_teacher.degree} -{" "}
-                                      {class1.id_teacher.teacher_name}
+                                      {class1.id_teacher
+                                        ? `${class1.id_teacher.degree} -
+                                      ${class1.id_teacher.teacher_name}`
+                                        : "Không xác định!"}
                                     </p>
                                   </div>
                                 </td>
@@ -577,7 +627,7 @@ const manageClass = () => {
                                   {class1 && class1.status ? (
                                     <FaRegCheckCircle className="h-5 w-5 text-green-600 mt-3" />
                                   ) : (
-                                    <FaRegCircle className="h-5 w-5 text-slate-800 mt-3"/>
+                                    <FaRegCircle className="h-5 w-5 text-slate-800 mt-3" />
                                   )}
                                 </th>
                                 <td className="px-4 py-4 text-sm whitespace-nowrap ">
@@ -597,12 +647,23 @@ const manageClass = () => {
                                 </td>
 
                                 <td className="px-4 py-4 text-sm whitespace-nowrap">
-                                  <div className="cursor-pointer flex w-full justify-around">
+                                  <div className="cursor-pointer flex w-full justify-between">
                                     <FaPencilAlt
                                       className=" h-4 w-4 text-black"
                                       onClick={() => handleUpdateClick(class1)}
                                     />
-                                    <FaTrash className="cursor-pointer h-4 w-4 text-red-600" />
+                                    <FaRedoAlt
+                                      onClick={() =>
+                                        handleResetClass(class1._id)
+                                      }
+                                      className="h-4 w-4 text-green-500"
+                                    />
+                                    <FaTrash
+                                      className="cursor-pointer h-4 w-4 text-red-600"
+                                      onClick={() =>
+                                        handleDeleteClass(class1._id)
+                                      }
+                                    />
                                   </div>
                                 </td>
                               </tr>
