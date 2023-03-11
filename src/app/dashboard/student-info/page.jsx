@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Toastify from "@/components/toastify";
+import { success, warn } from "@/components/toastify";
 
 const StudentInfo = () => {
   const [student, setStudent] = useState([]);
@@ -12,13 +14,36 @@ const StudentInfo = () => {
   const [confirmPass, setConfirmPass] = useState("");
 
   const handleSubmit = () => {
+    const url = "http://localhost:3030/user/getPassword";
     if (newPass == confirmPass) {
-      axios.post()
-      .then()
+      axios
+        .post(
+          url,
+          {
+            current_password: password,
+            new_password: newPass,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data == "Password changed") {
+            setPassword("");
+            setNewPass("");
+            setConfirmPass("");
+            success("Done");
+          } else {
+            warn(res.data)
+          }
+        });
     } else {
-      alert('password doesnt match!')
+      // alert("password doesn't match!");
+      warn("Password doesn't match!")
     }
-  }
+  };
 
   useEffect(() => {
     const url = "http://localhost:3030/user/student";
@@ -29,7 +54,7 @@ const StudentInfo = () => {
         },
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setStudent(res.data.id_user);
       })
       .catch((err) => {
@@ -39,6 +64,7 @@ const StudentInfo = () => {
   return (
     <>
       <div className="p-4 sm:ml-64 flex flex-row">
+        <Toastify />
         <div className="basis-1/3 border-x-2 ">
           <div className="flex items-center p-4 mt-10">
             <div className="relative flex flex-col items-center w-full">
@@ -237,7 +263,7 @@ const StudentInfo = () => {
                     ></input>
                     <div className="py-2">
                       <button
-                        onClick={handleSubmit }
+                        onClick={handleSubmit}
                         type="button"
                         className="inline-block rounded bg-primary px-4 py-1 text-sm  leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                       >

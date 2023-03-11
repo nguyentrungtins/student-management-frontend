@@ -31,7 +31,7 @@ const DashboardLayout = ({ children }) => {
   };
   return (
     <AppWrap>
-      <aside className="p-[25px]">
+      <aside className="pl-6 pr-2">
         <button
           data-drawer-target="default-sidebar"
           data-drawer-toggle="default-sidebar"
@@ -62,7 +62,7 @@ const DashboardLayout = ({ children }) => {
         >
           <div className="flex flex-col justify-between h-full px-3 py-[25px] overflow-y-auto  dark:bg-gray-800">
             <Link href={"/"}>
-              <div className="relative w-5/6 h-14">
+              <div className="relative w-4/6 ml-6 h-14">
                 <Image src={Logo} alt="Logo Images" fill={true} />
               </div>
             </Link>
