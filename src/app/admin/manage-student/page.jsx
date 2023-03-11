@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   AiOutlineEdit,
   AiOutlineDelete,
@@ -9,40 +9,82 @@ import {
 import { GrUpdate } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
 import { BsSearch } from "react-icons/bs";
+import { FaFileUpload } from "react-icons/fa";
+import axios from "axios";
 
 const ManageStudent = () => {
   const [isForm, setIsForm] = useState(false);
+  const [student, setStudent] = useState({
+    id_student: "",
+    first_name: "",
+    last_name: "",
+    phone: "",
+    address: "",
+    email: "",
+    major: "",
+    birth_day: "",
+  });
+  const [image, setImage] = useState(null);
+
+  const handleAddUser = (e) => {
+    console.log(image);
+
+    const formStudent = new FormData();
+    formStudent.append("image", image);
+    formStudent.append("id_student", student.id_student);
+    formStudent.append("first_name", student.first_name);
+    formStudent.append("last_name", student.last_name);
+    formStudent.append("address", student.address);
+    formStudent.append("phone", student.phone);
+    formStudent.append("email", student.email);
+    formStudent.append("birth_day", student.birth_day);
+    formStudent.append("major", student.major);
+
+    console.log(formStudent);
+
+    axios.post("http://localhost:3030/user/add", formStudent).then((res) => {
+      console.log(res.data);
+    });
+
+    e.preventDefault();
+  };
+
+  // const FileUploader = ({ onFileSelect }) => {
+  //   const fileInput = useRef(null);
+  //   const handleFileInput = (e) => {
+  //     onFileSelect(e.target.files[0]);
+  //   };
+  // };
+
   return (
-    
-      <div className="p-4 sm:ml-64 flex flex-row">
-        <div className="container max-w-7xl mx-auto mt-8">
-          <div className="mb-4">
-            <h1 className="text-xl text-gray-900 font-semibold underline">
-              {" "}
-              Manage student
-            </h1>
-            
+    <div className="p-4 sm:ml-64 flex flex-row">
+      <div className="container max-w-7xl mx-auto mt-8">
+        <div className="mb-4">
+          <h1 className="text-xl text-gray-900 font-semibold underline">
+            {" "}
+            Manage student
+          </h1>
 
-            <div className="flex justify-end items-center mt-4 gap-x-3">
-                <button
-                  onClick={() => setIsForm((state) => !state)}
-                  className="px-4 py-2 mr-5 rounded-md bg-primary text-sky-100 hover:bg-sky-600"
-                >
-                  Add student
-                </button>
-                <div className="relative flex items-center mt-4 md:mt-0">
-                  <span className="absolute pl-3">
-                    <BsSearch />
-                  </span>
+          <div className="flex justify-end items-center mt-4 gap-x-3">
+            <button
+              onClick={() => setIsForm((state) => !state)}
+              className="px-4 py-2 mr-5 rounded-md bg-primary text-sky-100 hover:bg-sky-600"
+            >
+              Add student
+            </button>
+            <div className="relative flex items-center mt-4 md:mt-0">
+              <span className="absolute pl-3">
+                <BsSearch />
+              </span>
 
-                  <input
-                    type="text"
-                    value=""
-                    placeholder="Search"
-                    className="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                  />
-                </div>
-              </div>
+              <input
+                type="text"
+                value=""
+                placeholder="Search"
+                className="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+              />
+            </div>
+          </div>
           <div
             className={
               isForm
@@ -61,8 +103,13 @@ const ManageStudent = () => {
                     <input
                       required
                       readOnly=""
-                      value=""
-                      onChange=""
+                      value={student.id_student}
+                      onChange={(e) =>
+                        setStudent((state) => ({
+                          ...state,
+                          id_student: e.target.value,
+                        }))
+                      }
                       type="text"
                       placeholder="Nhập text..."
                       className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -70,13 +117,38 @@ const ManageStudent = () => {
                   </div>
                   <div className="flex mt-3 items-center mb-8">
                     <h3 className="w-2/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
-                      Name
+                      First name
                     </h3>
                     <input
                       required
                       readOnly=""
-                      value=""
-                      onChange=""
+                      value={student.first_name}
+                      onChange={(e) =>
+                        setStudent((state) => ({
+                          ...state,
+                          first_name: e.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+
+                  <div className="flex mt-3 items-center mb-8">
+                    <h3 className="w-2/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      Last name
+                    </h3>
+                    <input
+                      required
+                      readOnly=""
+                      value={student.last_name}
+                      onChange={(e) =>
+                        setStudent((state) => ({
+                          ...state,
+                          last_name: e.target.value,
+                        }))
+                      }
                       type="text"
                       placeholder="Nhập text..."
                       className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -88,8 +160,13 @@ const ManageStudent = () => {
                     </h3>
                     <input
                       required
-                      value=""
-                      onChange=""
+                      value={student.address}
+                      onChange={(e) =>
+                        setStudent((state) => ({
+                          ...state,
+                          address: e.target.value,
+                        }))
+                      }
                       type="text"
                       placeholder="Nhập text..."
                       className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -103,8 +180,13 @@ const ManageStudent = () => {
                     </h3>
                     <input
                       type="text"
-                      value=""
-                      onChange=""
+                      value={student.phone}
+                      onChange={(e) =>
+                        setStudent((state) => ({
+                          ...state,
+                          phone: e.target.value,
+                        }))
+                      }
                       required
                       placeholder="Nhập text..."
                       className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-30 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -116,8 +198,13 @@ const ManageStudent = () => {
                     </h3>
                     <input
                       type="text"
-                      value=""
-                      onChange=""
+                      value={student.email}
+                      onChange={(e) =>
+                        setStudent((state) => ({
+                          ...state,
+                          email: e.target.value,
+                        }))
+                      }
                       required
                       placeholder="Nhập text..."
                       className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -131,8 +218,13 @@ const ManageStudent = () => {
                     </h3>
                     <input
                       type="text"
-                      value=""
-                      onChange=""
+                      value={student.birth_day}
+                      onChange={(e) =>
+                        setStudent((state) => ({
+                          ...state,
+                          birth_day: e.target.value,
+                        }))
+                      }
                       required
                       placeholder="Nhập text..."
                       className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
@@ -144,10 +236,27 @@ const ManageStudent = () => {
                     </h3>
                     <input
                       type="text"
-                      value=""
-                      onChange=""
+                      value={student.major}
+                      onChange={(e) =>
+                        setStudent((state) => ({
+                          ...state,
+                          major: e.target.value,
+                        }))
+                      }
                       required
                       placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+                  <div className="flex mt-3 items-center">
+                    <h3 className="w-1/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      Avatar
+                    </h3>
+                    <input
+                      type="file"
+                      // value={image}
+                      onChange={(e) => setImage(e.target.files[0])}
+                      required
                       className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
@@ -165,6 +274,7 @@ const ManageStudent = () => {
                 </button>
                 <button
                   type="submit"
+                  onClick={handleAddUser}
                   className={
                     "mx-8 peer flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
                   }
@@ -216,8 +326,12 @@ const ManageStudent = () => {
                         Major
                       </th>
 
+                      {/* <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                        Image
+                      </th> */}
+
                       <th
-                        className="px-6 py-3 text-sm text-center text-gray-500 border-b border-gray-200 bg-gray-50"
+                        className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 uppercase border-b border-gray-200 bg-gray-50"
                         colspan="3"
                       >
                         Action
@@ -255,8 +369,14 @@ const ManageStudent = () => {
                         <p>IT</p>
                       </td>
 
-                      <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
-                        <button className="mx-2 ">
+                      {/* <td className="px-6 py-4 text-center text-lg whitespace-no-wrap border-b border-gray-200">
+                        <button>
+                          <FaFileUpload />
+                        </button>
+                      </td> */}
+
+                      <td className="px-6 py-4 text-center text-lg whitespace-no-wrap border-b border-gray-200">
+                        <button className="mx-2">
                           <AiOutlineEdit />
                         </button>
                         <button className="mx-2">
