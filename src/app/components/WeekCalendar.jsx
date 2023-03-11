@@ -34,6 +34,7 @@ const getSlotNumber = (shift, weekday) => {
 const calSlot = (schedule) => {
   let slotList = [];
   let slotData = [];
+  
   schedule.map((i) => {
     let slot = 0;
     const _schedule = i.shift_weekday_room;

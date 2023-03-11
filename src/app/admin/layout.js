@@ -21,10 +21,12 @@ import AppWrap from "@/components/app_wrap";
 const DashboardLayout = ({ children }) => {
   const router = useRouter();
   const handleLogout = () => {
+    //console.log(window.interval)
+    window.clearInterval(window.interval);
+    window.interval = null;
     sessionStorage.removeItem("role");
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("refresh_token");
-    clearInterval(window.a);
     router.push("/auth/login");
   };
   return (

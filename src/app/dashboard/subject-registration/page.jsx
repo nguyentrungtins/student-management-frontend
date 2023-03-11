@@ -55,10 +55,11 @@ const subjectRegistration = () => {
     setDatas(updateData);
   };
 
-  const handleSignIn = (id_class) => {
+  const handleSignIn = (id_class, id_subject) => {
     const data = {
       sign: "signin",
       id_class: id_class,
+      id_subject: id_subject,
       query: url1,
     };
     //console.log(id_class)
@@ -69,11 +70,11 @@ const subjectRegistration = () => {
         },
       })
       .then((res) => {
+        success("Success!");
         setDatas(res.data.class);
       })
       .catch(function (err) {
-        sessionStorage.removeItem("access_token");
-        router.push("/auth/login");
+        warn("Fails!");
       });
   };
 
@@ -91,12 +92,12 @@ const subjectRegistration = () => {
         },
       })
       .then((res) => {
+        success("Success!");
         setDatas(res.data.class);
         //console.log(res.data)
       })
       .catch(function (err) {
-        sessionStorage.removeItem("access_token");
-        router.push("/auth/login");
+        warn("Fails!");
       });
   };
 
@@ -355,7 +356,10 @@ const subjectRegistration = () => {
                                       <FaSignInAlt
                                         className="cursor-pointer h-5 w-5 text-green-600"
                                         onClick={() =>
-                                          handleSignIn(data.data._id)
+                                          handleSignIn(
+                                            data.data._id,
+                                            data.data.id_subject._id
+                                          )
                                         }
                                       />
                                     )}

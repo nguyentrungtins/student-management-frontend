@@ -7,18 +7,26 @@ import { FaUserAlt, FaLock } from "react-icons/fa";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Toastify, { warn } from "@/components/toastify";
+import jwt_decode from "jwt-decode";
 
 export default function Login() {
   const [userName, setUserName] = useState("");
   const [passWord, setPassWord] = useState("");
   const router = useRouter();
 
+  //console.log(window.interval);
+
   useEffect(() => {
     if (sessionStorage.getItem("access_token")) {
-      if (sessionStorage.getItem("role") == "Student") {
-        router.push("/dashboard");
-      } else {
-        router.push("/admin");
+      const { exp } = jwt_decode(sessionStorage.getItem("access_token"));
+      var dateNow = new Date();
+
+      if (exp * 1000 > dateNow.getTime()) {
+        if (sessionStorage.getItem("role") == "Student") {
+          router.push("/dashboard");
+        } else {
+          router.push("/admin");
+        }
       }
     }
   }, []);
@@ -28,21 +36,27 @@ export default function Login() {
       user_name: userName,
       pass_word: passWord,
     };
-    console.log(1);
+    //console.log(1);
     axios
       .post("http://localhost:3030/auth/login", data)
       .then((response) => {
         sessionStorage.setItem("access_token", response.data.access_token);
+        sessionStorage.setItem("refresh_token", response.data.refresh_token);
         sessionStorage.setItem("role", response.data.role);
+
         if (response.data.role == "Student") {
+          /*const { totalName } = jwt_decode(response.data.access_token);
+          const index = totalName.indexOf("|");
+          const major = totalName.slice(0, index);
+          const name = totalName.slice(index + 1);
+          sessionStorage.setItem("name", name);
+          sessionStorage.setItem("major", major);*/
           router.push("/dashboard");
         } else {
           router.push("/admin");
         }
       })
       .catch(function (error) {
-        //const err = error.response.data.message || error;
-        //console.log(err)
         warn(
           "Đăng nhập không thành công. Vui lòng kiểm tra lại tài khoản và mật khẩu!"
         );

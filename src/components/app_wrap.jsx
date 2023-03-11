@@ -7,7 +7,6 @@ import axios from "axios";
 
 function AppWrap({ children }) {
   const router = useRouter();
-  const [isAuthentication, setIsAuthentication] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const token = sessionStorage.getItem("access_token");
@@ -32,16 +31,11 @@ function AppWrap({ children }) {
             setLoading(false);
           }
         }
-        //console.log(window.a)
-        if (!window.a) {
-          window.a = setInterval(() => {
-            //const { exp } = jwt_decode(response.data.access_token);
-            var dateNow = new Date();
-            if (false) {
-              console.log("Còn hạn sử dụng...");
-            } else {
-              // gọi axios tìm đến chỗ dể lấy token mới
-              /*axios
+        //console.log(window.interval);
+        if (!window.interval) {
+          //console.log(sessionStorage.getItem('refresh_token'))
+          window.interval = window.setInterval(() => {
+            axios
               .get("http://localhost:3030/auth/refresh", {
                 headers: {
                   Authorization: `Bearer ${sessionStorage.getItem(
@@ -53,16 +47,14 @@ function AppWrap({ children }) {
                 console.log(res.data);
                 sessionStorage.setItem("access_token", res.data.access_token);
                 sessionStorage.setItem("refresh_token", res.data.refresh_token);
-              });*/
-              console.log("Hết hạn dùng")
-            }
-          }, 5200);
+              });
+          }, 60000);
         }
       } else {
         router.push("/auth/login");
       }
     }
-  }, [isAuthentication]);
+  }, []);
   return (
     <div>
       {!loading ? (

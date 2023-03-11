@@ -57,7 +57,6 @@ const manageTeacher = () => {
         },
       })
       .then((res) => {
-        //console.log(res.data);
         success("Success!");
         setFilterQuey({
           page: 1,
@@ -72,13 +71,9 @@ const manageTeacher = () => {
           teacher_email: "",
           teacher_phone: "",
         });
-        //setAllTeacher(res.data.teacher);
       })
       .catch(function (err) {
-        //console.log(err);
         warn(err.response.data.message);
-
-        //console.log("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!");
       });
     e.preventDefault();
   };

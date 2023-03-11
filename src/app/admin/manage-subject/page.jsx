@@ -151,6 +151,7 @@ const manageSubject = () => {
       })
       .catch(function (err) {
         console.log(err);
+        warn('Fails!');
         //console.log("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!");
       });
   };
