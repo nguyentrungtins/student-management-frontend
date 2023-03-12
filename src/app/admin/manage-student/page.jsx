@@ -11,6 +11,7 @@ import { MdCancel } from "react-icons/md";
 import { BsSearch } from "react-icons/bs";
 import { FaFileUpload } from "react-icons/fa";
 import axios from "axios";
+import Toastify, { success, error } from "@/components/toastify";
 
 const ManageStudent = () => {
   const [isForm, setIsForm] = useState(false);
@@ -27,7 +28,7 @@ const ManageStudent = () => {
     major: "",
     birth_day: "",
   });
-  const [studentUpdate, setStudentUpdate] = useState({
+  const initialStudentUpdateData = {
     id_student: "",
     first_name: "",
     last_name: "",
@@ -35,15 +36,16 @@ const ManageStudent = () => {
     address: "",
     email: "",
     major: "",
-    birth_date: "",
+    birth_day: "",
     pass_word: "",
     id: "",
-  });
+  };
+  const [studentUpdate, setStudentUpdate] = useState(initialStudentUpdateData);
   console.log("student update: ", studentUpdate);
   const [image, setImage] = useState(null);
 
   const handleAddUser = (e) => {
-    console.log(image);
+    // console.log(image);
 
     const formStudent = new FormData();
     formStudent.append("image", image);
@@ -58,9 +60,26 @@ const ManageStudent = () => {
 
     console.log(formStudent);
 
-    axios.post("http://localhost:3030/user/add", formStudent).then((res) => {
-      console.log(res.data);
-    });
+    // axios.post("http://localhost:3030/user/add", formStudent).then((res) => {
+    //   console.log(res.data);
+    // });
+
+    const url = "http://localhost:3030/user/add";
+    axios
+      .post(url, formStudent, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      })
+      .then((res) => {
+        success("Thêm sinh viên thành công");
+
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        error("Thêm sinh viên thất bại");
+      });
 
     e.preventDefault();
   };
@@ -72,17 +91,18 @@ const ManageStudent = () => {
   //   };
   // };
   const handleUpdateUser = (e) => {
-    console.log(image);
+    // console.log(image);
+    e.preventDefault();
 
     const formStudent = new FormData();
-    formStudent.append("image", image);
+    formStudent.append("image", image ? image : studentUpdate.img);
     formStudent.append("id_student", studentUpdate.id_student);
     formStudent.append("first_name", studentUpdate.first_name);
     formStudent.append("last_name", studentUpdate.last_name);
     formStudent.append("address", studentUpdate.address);
     formStudent.append("phone", studentUpdate.phone);
     formStudent.append("email", studentUpdate.email);
-    formStudent.append("birth_day", studentUpdate.birth_date);
+    formStudent.append("birth_day", studentUpdate.birth_day);
     formStudent.append("major", studentUpdate.major);
     formStudent.append("pass_word", studentUpdate.pass_word);
     // formStudent.append("id", studentUpdate._id);
@@ -96,12 +116,16 @@ const ManageStudent = () => {
           Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
         },
       })
-      .then((res) => {})
+      .then((res) => {
+        success("Chỉnh sửa thông tin sinh viên thành công");
+        setIsUpdateForm(false);
+        setStudentUpdate(initialStudentUpdateData);
+        setData(res.data);
+      })
       .catch((err) => {
         console.log(err);
+        error("Chỉnh sửa thông tin sinh viên thất bại");
       });
-
-    e.preventDefault();
   };
   useEffect(() => {
     const url = "http://localhost:3030/user/all";
@@ -126,6 +150,7 @@ const ManageStudent = () => {
 
   return (
     <div className="p-4 sm:ml-64 flex flex-row">
+      <Toastify />
       <div className="container max-w-7xl mx-auto mt-8">
         <div className="mb-4">
           <h1 className="text-xl text-gray-900 font-semibold underline">
@@ -494,7 +519,7 @@ const ManageStudent = () => {
                     </h3>
                     <input
                       type="text"
-                      value={studentUpdate.birth_date}
+                      value={studentUpdate.birth_day}
                       onChange={(e) =>
                         setStudentUpdate((state) => ({
                           ...state,
@@ -526,13 +551,30 @@ const ManageStudent = () => {
                   </div>
                   <div className="flex mt-3 items-center">
                     <h3 className="w-1/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      Password
+                    </h3>
+                    <input
+                      type="text"
+                      value={studentUpdate.pass_word}
+                      onChange={(e) =>
+                        setStudentUpdate((state) => ({
+                          ...state,
+                          password: e.target.value,
+                        }))
+                      }
+                      required
+                      placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+                  <div className="flex mt-3 items-center">
+                    <h3 className="w-1/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
                       Avatar
                     </h3>
                     <input
                       type="file"
                       // value={image}
                       onChange={(e) => setImage(e.target.files[0])}
-                      required
                       className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
@@ -650,6 +692,7 @@ const ManageStudent = () => {
                               onClick={() => {
                                 setIsUpdateForm(true);
                                 setStudentUpdate(user);
+                                setImage(null);
                               }}
                             >
                               <AiOutlineEdit />

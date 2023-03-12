@@ -17,6 +17,8 @@ const ScheduleExam = () => {
           },
         })
         .then((res) => {
+          setMajor(res.data);
+          console.log("api: ", res.data);
           success("Xếp lịch học thành công");
         })
         .catch((err) => {
