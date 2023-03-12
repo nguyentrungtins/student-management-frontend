@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AiOutlineEdit,
   AiOutlineDelete,
@@ -14,6 +14,9 @@ import axios from "axios";
 
 const ManageStudent = () => {
   const [isForm, setIsForm] = useState(false);
+  const [isUpdateForm, setIsUpdateForm] = useState(false);
+  const [data, setData] = useState([]);
+
   const [student, setStudent] = useState({
     id_student: "",
     first_name: "",
@@ -24,6 +27,19 @@ const ManageStudent = () => {
     major: "",
     birth_day: "",
   });
+  const [studentUpdate, setStudentUpdate] = useState({
+    id_student: "",
+    first_name: "",
+    last_name: "",
+    phone: "",
+    address: "",
+    email: "",
+    major: "",
+    birth_date: "",
+    pass_word: "",
+    id: "",
+  });
+  console.log("student update: ", studentUpdate);
   const [image, setImage] = useState(null);
 
   const handleAddUser = (e) => {
@@ -55,6 +71,58 @@ const ManageStudent = () => {
   //     onFileSelect(e.target.files[0]);
   //   };
   // };
+  const handleUpdateUser = (e) => {
+    console.log(image);
+
+    const formStudent = new FormData();
+    formStudent.append("image", image);
+    formStudent.append("id_student", studentUpdate.id_student);
+    formStudent.append("first_name", studentUpdate.first_name);
+    formStudent.append("last_name", studentUpdate.last_name);
+    formStudent.append("address", studentUpdate.address);
+    formStudent.append("phone", studentUpdate.phone);
+    formStudent.append("email", studentUpdate.email);
+    formStudent.append("birth_day", studentUpdate.birth_date);
+    formStudent.append("major", studentUpdate.major);
+    formStudent.append("pass_word", studentUpdate.pass_word);
+    // formStudent.append("id", studentUpdate._id);
+
+    console.log(formStudent);
+
+    const url = "http://localhost:3030/user/update";
+    axios
+      .patch(url, formStudent, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      })
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+
+    e.preventDefault();
+  };
+  useEffect(() => {
+    const url = "http://localhost:3030/user/all";
+    if (sessionStorage.getItem("access_token")) {
+      axios
+        .get(url, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+          },
+        })
+        .then((res) => {
+          console.log(res);
+          setData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return redirect("/auth/login");
+    }
+  }, []);
 
   return (
     <div className="p-4 sm:ml-64 flex flex-row">
@@ -284,7 +352,207 @@ const ManageStudent = () => {
                 </button>
                 <button
                   type="button"
-                  onClick=""
+                  onClick={() => setIsForm(false)}
+                  className="mx-8 flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-red-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-red-600 dark:hover:bg-red-500 dark:bg-red-600"
+                >
+                  <MdCancel className="w-5 h-5" />
+                  <span>Cancel</span>
+                </button>
+              </div>
+            </form>
+          </div>
+          <div
+            className={
+              isUpdateForm
+                ? "mt-12 transition-all duration-1000 border-2 rounded-tl-2xl rounded-br-2xl border-gray-700 p-6"
+                : "mt-12 hidden"
+            }
+          >
+            <form onSubmit="">
+              <h3>Thông tin chi tiết</h3>
+              <div className="flex">
+                <div className="w-1/3 px-4 mt-8">
+                  <div className="flex mt-3 items-center mb-8 ">
+                    <h3 className="w-2/4 mt-1 text-sm text-gray-600 dark:text-gray-400">
+                      ID
+                    </h3>
+                    <input
+                      required
+                      readOnly=""
+                      value={studentUpdate.id_student}
+                      onChange={(e) =>
+                        setStudentUpdate((state) => ({
+                          ...state,
+                          id_student: e.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+                  <div className="flex mt-3 items-center mb-8">
+                    <h3 className="w-2/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      First name
+                    </h3>
+                    <input
+                      required
+                      readOnly=""
+                      value={studentUpdate.first_name}
+                      onChange={(e) =>
+                        setStudentUpdate((state) => ({
+                          ...state,
+                          first_name: e.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+
+                  <div className="flex mt-3 items-center mb-8">
+                    <h3 className="w-2/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      Last name
+                    </h3>
+                    <input
+                      required
+                      readOnly=""
+                      value={studentUpdate.last_name}
+                      onChange={(e) =>
+                        setStudentUpdate((state) => ({
+                          ...state,
+                          last_name: e.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+                  <div className="flex mt-3 items-center">
+                    <h3 className="w-3/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      Address
+                    </h3>
+                    <input
+                      required
+                      value={studentUpdate.address}
+                      onChange={(e) =>
+                        setStudentUpdate((state) => ({
+                          ...state,
+                          address: e.target.value,
+                        }))
+                      }
+                      type="text"
+                      placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+                </div>
+                <div className="w-1/3 px-4 mt-8">
+                  <div className="flex mt-3 items-center mb-8 ">
+                    <h3 className="w-3/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      Phone
+                    </h3>
+                    <input
+                      type="text"
+                      value={studentUpdate.phone}
+                      onChange={(e) =>
+                        setStudentUpdate((state) => ({
+                          ...state,
+                          phone: e.target.value,
+                        }))
+                      }
+                      required
+                      placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-30 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+                  <div className="flex mt-3 items-center">
+                    <h3 className="w-3/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      Email
+                    </h3>
+                    <input
+                      type="text"
+                      value={studentUpdate.email}
+                      onChange={(e) =>
+                        setStudentUpdate((state) => ({
+                          ...state,
+                          email: e.target.value,
+                        }))
+                      }
+                      required
+                      placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-70 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+                </div>
+                <div className="w-1/3 px-4 mt-8">
+                  <div className="flex mt-3 items-center mb-8 ">
+                    <h3 className="w-1/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      Birthday
+                    </h3>
+                    <input
+                      type="text"
+                      value={studentUpdate.birth_date}
+                      onChange={(e) =>
+                        setStudentUpdate((state) => ({
+                          ...state,
+                          birth_day: e.target.value,
+                        }))
+                      }
+                      required
+                      placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+                  <div className="flex mt-3 items-center">
+                    <h3 className="w-1/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      Major
+                    </h3>
+                    <input
+                      type="text"
+                      value={studentUpdate.major}
+                      onChange={(e) =>
+                        setStudentUpdate((state) => ({
+                          ...state,
+                          major: e.target.value,
+                        }))
+                      }
+                      required
+                      placeholder="Nhập text..."
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+                  <div className="flex mt-3 items-center">
+                    <h3 className="w-1/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
+                      Avatar
+                    </h3>
+                    <input
+                      type="file"
+                      // value={image}
+                      onChange={(e) => setImage(e.target.files[0])}
+                      required
+                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex mt-12 justify-end w-full">
+                <button
+                  type="submit"
+                  onClick={handleUpdateUser}
+                  className={
+                    "mx-8 peer flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 transition-colors duration-200 bg-white border rounded-lg gap-x-2 sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:border-gray-700"
+                  }
+                >
+                  <AiOutlineFileAdd className="w-5 h-5" />
+                  <span>Enter</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsUpdateForm(false)}
                   className="mx-8 flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-red-400 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-red-600 dark:hover:bg-red-500 dark:bg-red-600"
                 >
                   <MdCancel className="w-5 h-5" />
@@ -304,7 +572,11 @@ const ManageStudent = () => {
                       </th>
 
                       <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                        Name
+                        First Name
+                      </th>
+
+                      <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                        Last Name
                       </th>
 
                       <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-center text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
@@ -340,50 +612,54 @@ const ManageStudent = () => {
                   </thead>
 
                   <tbody className="bg-white">
-                    <tr>
-                      <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
-                        <p>1</p>
-                      </td>
+                    {data &&
+                      data.map((user) => (
+                        <tr>
+                          <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
+                            <p>{user.id_student}</p>
+                          </td>
 
-                      <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
-                        <p>Nguyen Thanh Lam</p>
-                      </td>
+                          <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
+                            <p>{user.first_name}</p>
+                          </td>
+                          <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
+                            <p>{user.last_name}</p>
+                          </td>
+                          <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
+                            <p>{user.address}</p>
+                          </td>
 
-                      <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
-                        <p>Q10, TPHCM</p>
-                      </td>
+                          <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
+                            <p>{user.phone}</p>
+                          </td>
 
-                      <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
-                        <p>0969696969</p>
-                      </td>
+                          <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
+                            <p>{user.email}</p>
+                          </td>
 
-                      <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
-                        <p>thanhlam@gmail.com</p>
-                      </td>
+                          <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
+                            <p>{user.birth_date}</p>
+                          </td>
 
-                      <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
-                        <p>26/10/99</p>
-                      </td>
-
-                      <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
-                        <p>IT</p>
-                      </td>
-
-                      {/* <td className="px-6 py-4 text-center text-lg whitespace-no-wrap border-b border-gray-200">
-                        <button>
-                          <FaFileUpload />
-                        </button>
-                      </td> */}
-
-                      <td className="px-6 py-4 text-center text-lg whitespace-no-wrap border-b border-gray-200">
-                        <button className="mx-2">
-                          <AiOutlineEdit />
-                        </button>
-                        <button className="mx-2">
-                          <AiOutlineDelete />
-                        </button>
-                      </td>
-                    </tr>
+                          <td className="px-6 py-4 text-center text-sm whitespace-no-wrap border-b border-gray-200">
+                            <p>{user.major}</p>
+                          </td>
+                          <td className="px-6 py-4 text-center text-lg whitespace-no-wrap border-b border-gray-200">
+                            <button
+                              className="mx-2"
+                              onClick={() => {
+                                setIsUpdateForm(true);
+                                setStudentUpdate(user);
+                              }}
+                            >
+                              <AiOutlineEdit />
+                            </button>
+                            <button className="mx-2">
+                              <AiOutlineDelete />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
