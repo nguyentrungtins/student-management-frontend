@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   AiOutlineEdit,
   AiOutlineDelete,
@@ -9,11 +9,14 @@ import {
 import { GrUpdate } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
 import { BsSearch } from "react-icons/bs";
-import { FaFileUpload } from "react-icons/fa";
 import axios from "axios";
 
 const ManageStudent = () => {
+
+  // hide/show form add student
   const [isForm, setIsForm] = useState(false);
+
+  // set form value
   const [student, setStudent] = useState({
     id_student: "",
     first_name: "",
@@ -26,6 +29,7 @@ const ManageStudent = () => {
   });
   const [image, setImage] = useState(null);
 
+  // button add student
   const handleAddUser = (e) => {
     console.log(image);
 
@@ -48,13 +52,6 @@ const ManageStudent = () => {
 
     e.preventDefault();
   };
-
-  // const FileUploader = ({ onFileSelect }) => {
-  //   const fileInput = useRef(null);
-  //   const handleFileInput = (e) => {
-  //     onFileSelect(e.target.files[0]);
-  //   };
-  // };
 
   return (
     <div className="p-4 sm:ml-64 flex flex-row">
