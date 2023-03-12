@@ -47,7 +47,7 @@ const manageClass = () => {
         },
       })
       .then((res) => {
-        //console.log(res.data);
+        console.log(res.data);
         setSetting({
           page_total: res.data.page_total,
           totalClass: res.data.totalSubject,
@@ -99,17 +99,32 @@ const manageClass = () => {
       buttonOpen: 2,
     });
 
-    const data = {
-      id: class1._id,
-      id_class: class1.id_class,
-      class_name: class1.class_name,
-      id_subject: class1.id_subject.id_subject,
-      id_teacher: class1.id_teacher.id_teacher,
-      id_room: class1.id_room.id_room,
-      limit_student: class1.limit_student,
-      current_student: class1.current_student,
-    };
-    setNewClass(data);
+    if (class1.id_teacher != null) {
+      const data = {
+        id: class1._id,
+        id_class: class1.id_class,
+        class_name: class1.class_name,
+        id_subject: class1.id_subject.id_subject,
+        id_teacher: class1.id_teacher.id_teacher,
+        id_room: class1.id_room.id_room,
+        limit_student: class1.limit_student,
+        current_student: class1.current_student,
+      };
+
+      setNewClass(data);
+    } else {
+      const data = {
+        id: class1._id,
+        id_class: class1.id_class,
+        class_name: class1.class_name,
+        id_subject: class1.id_subject.id_subject,
+        id_teacher: "",
+        id_room: class1.id_room.id_room,
+        limit_student: class1.limit_student,
+        current_student: class1.current_student,
+      };
+      setNewClass(data);
+    }
   };
 
   const handleClickCancel = () => {
@@ -179,6 +194,7 @@ const manageClass = () => {
         //console.log(res.data.class);
       })
       .catch(function (err) {
+        console.log(err);
         warn(err.response.data.message);
       });
   };
@@ -204,7 +220,7 @@ const manageClass = () => {
       })
       .catch(function (err) {
         console.log(err);
-        warn('Fails');
+        warn("Fails");
         //console.log("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại!");
       });
   };
