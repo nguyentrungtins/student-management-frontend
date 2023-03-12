@@ -11,18 +11,26 @@
 
 "@kurkle/color@^0.3.0":
   version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.3.2.tgz#5acd38242e8bde4f9986e7913c8fdf49d3aa199f"
+  resolved "https://registry.npmjs.org/@kurkle/color/-/color-0.3.2.tgz"
   integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
 
+<<<<<<< HEAD
 "@next/env@13.2.1":
   version "13.2.1"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-13.2.1.tgz#082d42cfc0c794e9185d7b4133d71440ba2e795d"
   integrity sha512-Hq+6QZ6kgmloCg8Kgrix+4F0HtvLqVK3FZAnlAoS0eonaDemHe1Km4kwjSWRE3JNpJNcKxFHF+jsZrYo0SxWoQ==
+=======
+"@next/env@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.npmjs.org/@next/env/-/env-13.1.6.tgz"
+  integrity sha512-s+W9Fdqh5MFk6ECrbnVmmAOwxKQuhGMT7xXHrkYIBMBcTiOqNWhv5KbJIboKR5STXxNXl32hllnvKaffzFaWQg==
+>>>>>>> c24a0c2d6adadc33f44f0ab1deeadb30fe3c00ab
 
 "@next/font@^13.1.6":
   version "13.1.6"
   resolved "https://registry.npmjs.org/@next/font/-/font-13.1.6.tgz"
   integrity sha512-AITjmeb1RgX1HKMCiA39ztx2mxeAyxl4ljv2UoSBUGAbFFMg8MO7YAvjHCgFhD39hL7YTbFjol04e/BPBH5RzQ==
+<<<<<<< HEAD
 
 "@next/swc-android-arm-eabi@13.2.1":
   version "13.2.1"
@@ -88,6 +96,73 @@
   version "13.2.1"
   resolved "https://registry.yarnpkg.com/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.2.1.tgz#09713c6a925461f414e89422851326d1625bd4d2"
   integrity sha512-r3+0fSaIZT6N237iMzwUhfNwjhAFvXjqB+4iuW+wcpxW+LHm1g/IoxN8eSRcb8jPItC86JxjAxpke0QL97qd6g==
+=======
+
+"@next/swc-android-arm-eabi@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-android-arm-eabi/-/swc-android-arm-eabi-13.1.6.tgz#d766dfc10e27814d947b20f052067c239913dbcc"
+  integrity sha512-F3/6Z8LH/pGlPzR1AcjPFxx35mPqjE5xZcf+IL+KgbW9tMkp7CYi1y7qKrEWU7W4AumxX/8OINnDQWLiwLasLQ==
+
+"@next/swc-android-arm64@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-android-arm64/-/swc-android-arm64-13.1.6.tgz#f37a98d5f18927d8c9970d750d516ac779465176"
+  integrity sha512-cMwQjnB8vrYkWyK/H0Rf2c2pKIH4RGjpKUDvbjVAit6SbwPDpmaijLio0LWFV3/tOnY6kvzbL62lndVA0mkYpw==
+
+"@next/swc-darwin-arm64@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-darwin-arm64/-/swc-darwin-arm64-13.1.6.tgz#ec1b90fd9bf809d8b81004c5182e254dced4ad96"
+  integrity sha512-KKRQH4DDE4kONXCvFMNBZGDb499Hs+xcFAwvj+rfSUssIDrZOlyfJNy55rH5t2Qxed1e4K80KEJgsxKQN1/fyw==
+
+"@next/swc-darwin-x64@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-darwin-x64/-/swc-darwin-x64-13.1.6.tgz#e869ac75d16995eee733a7d1550322d9051c1eb4"
+  integrity sha512-/uOky5PaZDoaU99ohjtNcDTJ6ks/gZ5ykTQDvNZDjIoCxFe3+t06bxsTPY6tAO6uEAw5f6vVFX5H5KLwhrkZCA==
+
+"@next/swc-freebsd-x64@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-freebsd-x64/-/swc-freebsd-x64-13.1.6.tgz#84a7b2e423a2904afc2edca21c2f1ba6b53fa4c1"
+  integrity sha512-qaEALZeV7to6weSXk3Br80wtFQ7cFTpos/q+m9XVRFggu+8Ib895XhMWdJBzew6aaOcMvYR6KQ6JmHA2/eMzWw==
+
+"@next/swc-linux-arm-gnueabihf@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-arm-gnueabihf/-/swc-linux-arm-gnueabihf-13.1.6.tgz#980eed1f655ff8a72187d8a6ef9e73ac39d20d23"
+  integrity sha512-OybkbC58A1wJ+JrJSOjGDvZzrVEQA4sprJejGqMwiZyLqhr9Eo8FXF0y6HL+m1CPCpPhXEHz/2xKoYsl16kNqw==
+
+"@next/swc-linux-arm64-gnu@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-arm64-gnu/-/swc-linux-arm64-gnu-13.1.6.tgz#87a71db21cded3f7c63d1d19079845c59813c53d"
+  integrity sha512-yCH+yDr7/4FDuWv6+GiYrPI9kcTAO3y48UmaIbrKy8ZJpi7RehJe3vIBRUmLrLaNDH3rY1rwoHi471NvR5J5NQ==
+
+"@next/swc-linux-arm64-musl@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-arm64-musl/-/swc-linux-arm64-musl-13.1.6.tgz#c5aac8619331b9fd030603bbe2b36052011e11de"
+  integrity sha512-ECagB8LGX25P9Mrmlc7Q/TQBb9rGScxHbv/kLqqIWs2fIXy6Y/EiBBiM72NTwuXUFCNrWR4sjUPSooVBJJ3ESQ==
+
+"@next/swc-linux-x64-gnu@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-13.1.6.tgz#9513d36d540bbfea575576746736054c31aacdea"
+  integrity sha512-GT5w2mruk90V/I5g6ScuueE7fqj/d8Bui2qxdw6lFxmuTgMeol5rnzAv4uAoVQgClOUO/MULilzlODg9Ib3Y4Q==
+
+"@next/swc-linux-x64-musl@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-13.1.6.tgz#d61fc6884899f5957251f4ce3f522e34a2c479b7"
+  integrity sha512-keFD6KvwOPzmat4TCnlnuxJCQepPN+8j3Nw876FtULxo8005Y9Ghcl7ACcR8GoiKoddAq8gxNBrpjoxjQRHeAQ==
+
+"@next/swc-win32-arm64-msvc@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-arm64-msvc/-/swc-win32-arm64-msvc-13.1.6.tgz#fac2077a8ae9768e31444c9ae90807e64117cda7"
+  integrity sha512-OwertslIiGQluFvHyRDzBCIB07qJjqabAmINlXUYt7/sY7Q7QPE8xVi5beBxX/rxTGPIbtyIe3faBE6Z2KywhQ==
+
+"@next/swc-win32-ia32-msvc@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.yarnpkg.com/@next/swc-win32-ia32-msvc/-/swc-win32-ia32-msvc-13.1.6.tgz#498bc11c91b4c482a625bf4b978f98ae91111e46"
+  integrity sha512-g8zowiuP8FxUR9zslPmlju7qYbs2XBtTLVSxVikPtUDQedhcls39uKYLvOOd1JZg0ehyhopobRoH1q+MHlIN/w==
+
+"@next/swc-win32-x64-msvc@13.1.6":
+  version "13.1.6"
+  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.1.6.tgz"
+  integrity sha512-Ls2OL9hi3YlJKGNdKv8k3X/lLgc3VmLG3a/DeTkAd+lAituJp8ZHmRmm9f9SL84fT3CotlzcgbdaCDfFwFA6bA==
+>>>>>>> c24a0c2d6adadc33f44f0ab1deeadb30fe3c00ab
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -209,14 +284,14 @@ caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001426, caniuse-lite@^1.0.300014
 
 chart.js@^4.2.1:
   version "4.2.1"
-  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-4.2.1.tgz#d2bd5c98e9a0ae35408975b638f40513b067ba1d"
+  resolved "https://registry.npmjs.org/chart.js/-/chart.js-4.2.1.tgz"
   integrity sha512-6YbpQ0nt3NovAgOzbkSSeeAQu/3za1319dPUQTXn9WcOpywM8rGKxJHrhS8V8xEkAlk8YhEfjbuAPfUyp6jIsw==
   dependencies:
     "@kurkle/color" "^0.3.0"
 
 chokidar@^3.5.3:
   version "3.5.3"
-  resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.3.tgz#1cf37c8707b932bd1af1ae22c0432e2acd1903bd"
+  resolved "https://registry.npmjs.org/chokidar/-/chokidar-3.5.3.tgz"
   integrity sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==
   dependencies:
     anymatch "~3.1.2"
@@ -480,10 +555,17 @@ next-compose-plugins@^2.2.1:
   resolved "https://registry.npmjs.org/next-compose-plugins/-/next-compose-plugins-2.2.1.tgz"
   integrity sha512-OjJ+fV15FXO2uQXQagLD4C0abYErBjyjE0I0FHpOEIB8upw0hg1ldFP6cqHTJBH1cZqy96OeR3u1dJ+Ez2D4Bg==
 
+<<<<<<< HEAD
 next@13.2.1:
   version "13.2.1"
   resolved "https://registry.yarnpkg.com/next/-/next-13.2.1.tgz#34d823f518632b36379863228ed9f861c335b9c0"
   integrity sha512-qhgJlDtG0xidNViJUPeQHLGJJoT4zDj/El7fP3D3OzpxJDUfxsm16cK4WTMyvSX1ciIfAq05u+0HqFAa+VJ+Hg==
+=======
+next@13.1.6:
+  version "13.1.6"
+  resolved "https://registry.npmjs.org/next/-/next-13.1.6.tgz"
+  integrity sha512-hHlbhKPj9pW+Cymvfzc15lvhaOZ54l+8sXDXJWm3OBNBzgrVj6hwGPmqqsXg40xO1Leq+kXpllzRPuncpC0Phw==
+>>>>>>> c24a0c2d6adadc33f44f0ab1deeadb30fe3c00ab
   dependencies:
     "@next/env" "13.2.1"
     "@swc/helpers" "0.4.14"
@@ -624,7 +706,7 @@ quick-lru@^5.1.1:
 
 react-chartjs-2@^5.2.0:
   version "5.2.0"
-  resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-5.2.0.tgz#43c1e3549071c00a1a083ecbd26c1ad34d385f5d"
+  resolved "https://registry.npmjs.org/react-chartjs-2/-/react-chartjs-2-5.2.0.tgz"
   integrity sha512-98iN5aguJyVSxp5U3CblRLH67J8gkfyGNbiK3c+l1QI/G4irHMPQw44aEPmjVag+YKTyQ260NcF82GTQ3bdscA==
 
 react-dom@^18.2.0:
@@ -652,9 +734,15 @@ react-toastify@^9.1.1:
   dependencies:
     clsx "^1.1.1"
 
+<<<<<<< HEAD
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
+=======
+react@18.2.0:
+  version "18.2.0"
+  resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
+>>>>>>> c24a0c2d6adadc33f44f0ab1deeadb30fe3c00ab
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
   dependencies:
     loose-envify "^1.1.0"
@@ -718,6 +806,14 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
+<<<<<<< HEAD
+=======
+swc-loader@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.npmjs.org/swc-loader/-/swc-loader-0.2.3.tgz"
+  integrity sha512-D1p6XXURfSPleZZA/Lipb3A8pZ17fP4NObZvFCDjK/OKljroqDpPmsBdTraWhVBqUNpcWBQY1imWdoPScRlQ7A==
+
+>>>>>>> c24a0c2d6adadc33f44f0ab1deeadb30fe3c00ab
 tailwindcss@^3.2.7:
   version "3.2.7"
   resolved "https://registry.npmjs.org/tailwindcss/-/tailwindcss-3.2.7.tgz"

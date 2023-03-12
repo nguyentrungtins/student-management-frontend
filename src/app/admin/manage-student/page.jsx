@@ -9,11 +9,11 @@ import {
 import { GrUpdate } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
 import { BsSearch } from "react-icons/bs";
-import { FaFileUpload } from "react-icons/fa";
 import axios from "axios";
 import Toastify, { success, error } from "@/components/toastify";
 
 const ManageStudent = () => {
+  // hide/show form add student
   const [isForm, setIsForm] = useState(false);
   const [isUpdateForm, setIsUpdateForm] = useState(false);
   const [data, setData] = useState([]);
@@ -44,6 +44,7 @@ const ManageStudent = () => {
   console.log("student update: ", studentUpdate);
   const [image, setImage] = useState(null);
 
+  // button add student
   const handleAddUser = (e) => {
     // console.log(image);
 
