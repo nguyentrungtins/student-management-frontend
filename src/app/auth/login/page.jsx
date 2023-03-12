@@ -36,7 +36,7 @@ export default function Login() {
       user_name: userName,
       pass_word: passWord,
     };
-    //console.log(1);
+
     axios
       .post("http://localhost:3030/auth/login", data)
       .then((response) => {
@@ -45,12 +45,12 @@ export default function Login() {
         sessionStorage.setItem("role", response.data.role);
 
         if (response.data.role == "Student") {
-          /*const { totalName } = jwt_decode(response.data.access_token);
+          const { totalName } = jwt_decode(response.data.access_token);
           const index = totalName.indexOf("|");
           const major = totalName.slice(0, index);
           const name = totalName.slice(index + 1);
           sessionStorage.setItem("name", name);
-          sessionStorage.setItem("major", major);*/
+          sessionStorage.setItem("major", major);
           router.push("/dashboard");
         } else {
           router.push("/admin");

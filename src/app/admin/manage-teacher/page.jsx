@@ -30,6 +30,7 @@ const manageTeacher = () => {
   const [setting, setSetting] = useState();
 
   useEffect(() => {
+    
     axios
       .post("http://localhost:3030/teacher/get", filterQuey, {
         headers: {

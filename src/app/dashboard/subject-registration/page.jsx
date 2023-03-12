@@ -20,7 +20,7 @@ const subjectRegistration = () => {
   });
   useEffect(() => {
     //clearInterval(window.a);
-
+    console.log(sessionStorage.getItem('name'));
     const url = `http://localhost:3030/class/get/?page=${url1.page}&limit=${url1.limit}&select=${url1.select}&search=${url1.search}`;
     axios
       .get(url, {
