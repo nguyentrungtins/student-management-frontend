@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import Toastify, { success, warn } from "@/components/toastify";
+import HeaderNavigation from "@/app/components/HeaderNavigation";
 
 const subjectRegistration = () => {
   const [setting, setSetting] = useState();
@@ -20,7 +21,7 @@ const subjectRegistration = () => {
   });
   useEffect(() => {
     //clearInterval(window.a);
-    console.log(sessionStorage.getItem('name'));
+    console.log(sessionStorage.getItem("name"));
     const url = `http://localhost:3030/class/get/?page=${url1.page}&limit=${url1.limit}&select=${url1.select}&search=${url1.search}`;
     axios
       .get(url, {
@@ -102,14 +103,13 @@ const subjectRegistration = () => {
   };
 
   return (
-    <div className="px-4 py-2 sm:ml-64">
+    <div className="ml-64">
+      <HeaderNavigation title="Đăng Kí Môn Học" desc="Học kỳ II 2022-2203" />
       {datas ? (
-        <div className="p-2">
+        <div className="p-5">
           <Toastify />
-          <h1 className="sm:pl-20 text-xl text-gray-900 font-semibold">
-            Đăng Ký Môn Học - học kỳ I, 2023
-          </h1>
-          <div className="w-11/12 mt-20 mx-auto">
+
+          <div className="mt-6 mx-auto">
             <section className="container px-4 mx-auto">
               <div className="sm:flex sm:items-center sm:justify-between">
                 <div>

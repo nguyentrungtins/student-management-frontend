@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Toastify from "@/components/toastify";
 import { success, warn } from "@/components/toastify";
-
+import HeaderNavigation from "@/app/components/HeaderNavigation";
 const StudentInfo = () => {
   const [student, setStudent] = useState([]);
   const [show, setShow] = useState(false);
@@ -36,12 +36,12 @@ const StudentInfo = () => {
             setConfirmPass("");
             success("Done");
           } else {
-            warn(res.data)
+            warn(res.data);
           }
         });
     } else {
       // alert("password doesn't match!");
-      warn("Password doesn't match!")
+      warn("Password doesn't match!");
     }
   };
 
@@ -62,17 +62,23 @@ const StudentInfo = () => {
       });
   }, []);
   return (
-    <>
-      <div className="p-4 sm:ml-64 flex flex-row">
+    <div className="ml-64 bg-gray-50">
+      <HeaderNavigation
+        title="Thông Tin Sinh Viên"
+        desc="Học kỳ II 2022-2203"
+      />
+      <div className="flex flex-row mt-6">
         <Toastify />
-        <div className="basis-1/3 border-x-2 ">
+
+        <div className="basis-1/3 border-r-2 mt-6">
           <div className="flex items-center p-4 mt-10">
             <div className="relative flex flex-col items-center w-full">
-              <div className="h-24 w-24 md rounded-full relative avatar flex items-end justify-end min-w-max absolute -top-16 flex ">
-                <img
-                  className="h-24 w-24 md rounded-full relative"
+              <div className="h-24 w-24 md rounded-full relative avatar  items-end justify-end min-w-max  -top-16 flex ">
+                <Image
+                  className="rounded-full"
                   src={`http:localhost:3030/images/${student.img}`}
-                  alt=""
+                  width={100}
+                  height={100}
                   // fill={true}
                 />
                 <div className="absolute"></div>
@@ -81,52 +87,60 @@ const StudentInfo = () => {
                 <div className="py-2 flex space-x-2">
                   <button
                     type="button"
-                    className="inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                    className="inline-block rounded-lg bg-blue-500 px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-blue-500-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-blue-500-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-blue-500-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                   >
-                    Upload photo
+                    Thay avatar
                   </button>
                   <button
                     type="button"
-                    className="inline-block rounded border-2 border-primary-100 px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:border-primary-accent-100 hover:bg-neutral-500 hover:bg-opacity-10 focus:border-primary-accent-100 focus:outline-none focus:ring-0 active:border-primary-accent-200 dark:text-primary-100 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
+                    className="inline-block rounded-lg border-2 border-gray-300 bg-white px-6 pt-2 pb-[6px] text-xs font-medium uppercase leading-normal text-primary-700 transition duration-150 ease-in-out hover:border-primary-accent-100 hover:bg-neutral-500 hover:bg-opacity-10 focus:border-primary-accent-100 focus:outline-none focus:ring-0 active:border-primary-accent-200 dark:text-primary-100 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
                     data-te-ripple-init
                   >
-                    Delete
+                    Xóa
                   </button>
                 </div>
               </div>
-              <table className="text-sm my-3 bg-gray-100">
-                <tbody>
+              <table className="text-sm bg-gray-100 w-10/12 rounded-xl mt-6 max-w-[300px]">
+                <tbody className="w-full p-6">
                   <tr>
-                    <td className="px-2 py-2 text-gray-500 font-bold">Name</td>
-                    <td className="px-2 py-2">
+                    <td className="px-6 py-4 text-gray-500 font-bold">Name</td>
+                    <td className="px-6 py-4 text-end">
                       {student && student.last_name} {student.first_name}
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-2 py-2 text-gray-500 font-bold">
-                      Student Id
+                    <td className="px-6 py-4 text-gray-500 font-bold">
+                      Mã sinh viên
                     </td>
-                    <td className="px-2 py-2">
+                    <td className="px-6 py-4 text-end">
                       {student && student.id_student}
                     </td>
                   </tr>
+                </tbody>
+              </table>
+              <table className="text-sm bg-gray-100 w-10/12 rounded-xl mt-6 max-w-[300px]">
+                <tbody className="w-full p-6">
                   <tr>
-                    <td className="px-2 py-2 text-gray-500 font-bold">Phone</td>
-                    <td className="px-2 py-2">{student && student.phone}</td>
+                    <td className="px-6 py-4 text-gray-500 font-bold">Phone</td>
+                    <td className="px-6 py-4 text-end">
+                      {student && student.phone}
+                    </td>
                   </tr>
                   <tr>
-                    <td className="px-2 py-2 text-gray-500 font-bold">
-                      Date of birth
+                    <td className="px-6 py-4 text-gray-500 font-bold">
+                      Ngày sinh
                     </td>
-                    <td className="px-2 py-2">
+                    <td className="px-6 py-4 text-end">
                       {student && student.birth_day}
                     </td>
                   </tr>
                   <tr>
-                    <td className="px-2 py-2 text-gray-500 font-bold">
-                      Address
+                    <td className="px-6 py-4 text-gray-500 font-bold">
+                      Địa chỉ
                     </td>
-                    <td className="px-2 py-2">{student && student.address}</td>
+                    <td className="px-6 py-4 text-end">
+                      {student && student.address}
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -134,103 +148,141 @@ const StudentInfo = () => {
           </div>
         </div>
         <div className="basis-2/3">
-          <div className="inputs w-full max-w-2xl p-6 mx-auto">
+          <div className="inputs w-full max-w-2xl px-6 py-4 mx-auto">
             <h2 className="text-xl text-gray-900 font-semibold">
-              Student Information
+              Thông tin chi tiết
             </h2>
-            <form className="mt-6 border-t border-gray-400 pt-4">
+            <form className="mt-6 border-t border-gray-200 pt-4">
               <div className="flex flex-wrap -mx-3 mb-6">
-                <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
-                    First name
-                  </label>
-                  <span
-                    type="text"
-                    className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
-                  >
-                    {student && student.first_name}
-                  </span>
-                </div>
-                <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
-                    Last name
-                  </label>
-                  <span
-                    type="text"
-                    className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
-                  >
-                    {student && student.last_name}
-                  </span>
-                </div>
-                <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
-                    Student Id
-                  </label>
-                  <span
-                    type="text"
-                    className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
-                  >
-                    {student && student.id_student}
-                  </span>
-                </div>
-                <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
-                    Phone number
-                  </label>
-                  <span
-                    type="text"
-                    className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
-                  >
-                    {student && student.phone}
-                  </span>
-                </div>
-                <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
-                    Date of birth
-                  </label>
-                  <div className="flex-shrink w-full inline-block relative">
-                    <span
-                      type="text"
-                      className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                <div className="w-full md:w-1/2 px-3 mb-2">
+                  <div class="mb-6">
+                    <label
+                      for="email"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      {student && student.birth_day}
-                    </span>
+                      Tên
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      placeholder={student && student.first_name}
+                      disabled
+                    />
                   </div>
                 </div>
-                <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
-                    Address
-                  </label>
-                  <div className="flex-shrink w-full inline-block relative">
-                    <span
-                      type="text"
-                      className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
+                <div className="w-full md:w-1/2 px-3 mb-2">
+                  <div class="mb-6">
+                    <label
+                      for="email"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      {student && student.address}
-                    </span>
+                      Họ
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      placeholder={student && student.last_name}
+                      disabled
+                    />
                   </div>
                 </div>
-                <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
-                    Email
-                  </label>
-                  <span
-                    type="text"
-                    className="appearance-none block w-full text-sm bg-white text-gray-700 border border-gray-300 shadow-inner rounded-md py-1 px-4 leading-tight focus:outline-none  focus:border-gray-400"
-                  >
-                    {student && student.email}
-                  </span>
+                <div className="w-full md:w-1/2 px-3 mb-2">
+                  <div class="mb-6">
+                    <label
+                      for="email"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Mã sinh viên
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      placeholder={student && student.id_student}
+                      disabled
+                    />
+                  </div>
                 </div>
-                <div className="w-full md:w-1/2 px-3 mb-6">
-                  <label className="block tracking-wide text-gray-700 text-sm font-bold mb-2">
-                    Password
+                <div className="w-full md:w-1/2 px-3 mb-2">
+                  <div class="mb-6">
+                    <label
+                      for="email"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Số điện thoại
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      placeholder={student && student.phone}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="w-full md:w-1/2 px-3 mb-2">
+                  <div class="mb-6">
+                    <label
+                      for="email"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Ngày sinh
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      placeholder={student && student.birth_day}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="w-full md:w-1/2 px-3 mb-2">
+                  <div class="mb-6">
+                    <label
+                      for="email"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Địa chỉ
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      placeholder={student && student.address}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="w-full md:w-1/2 px-3 mb-2">
+                  <div class="mb-6">
+                    <label
+                      for="email"
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                      placeholder={student && student.email}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="w-full md:w-1/2 px-3 mb-2">
+                  <label className="block tracking-wide text-gray-900 text-sm font-medium mb-2">
+                    Mật khẩu
                   </label>
                   <button
                     onClick={() => setShow((state) => !state)}
                     type="button"
-                    className="inline-block rounded bg-primary px-4 py-1 text-sm  leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                    className="inline-block rounded-lg  bg-blue-500 px-6 py-2 text-sm  leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-blue-500-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-blue-500-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-blue-500-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                   >
-                    Change password
+                    Đổi mật khẩu
                   </button>
                   <div className={show ? "block w-40 py-4" : "hidden"}>
                     <input
@@ -265,7 +317,7 @@ const StudentInfo = () => {
                       <button
                         onClick={handleSubmit}
                         type="button"
-                        className="inline-block rounded bg-primary px-4 py-1 text-sm  leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                        className="inline-block rounded-lg bg-blue-500 px-6 py-2 text-sm  leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-blue-500-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-blue-500-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-blue-500-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                       >
                         OK
                       </button>
@@ -277,7 +329,7 @@ const StudentInfo = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default StudentInfo;

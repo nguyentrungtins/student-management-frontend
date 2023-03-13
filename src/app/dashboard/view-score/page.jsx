@@ -39,7 +39,7 @@ const ViewScore = () => {
   }
   return (
     <div className="ml-64">
-      <HeaderNavigation title="Điểm Số" desc="Học kỳ I 2022-2203" />
+      <HeaderNavigation title="Điểm Số" desc="Học kỳ II 2022-2203" />
       <table className="w-full my-6 border-collapse rounded-lg bg-white text-left text-base text-gray-500">
         <thead className="">
           <tr>

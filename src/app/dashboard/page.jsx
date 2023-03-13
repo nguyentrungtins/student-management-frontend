@@ -36,7 +36,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="px-2 sm:ml-60">
-        <HeaderNavigation title="Dashboard" desc="Học kỳ I 2022-2203" />
+        <HeaderNavigation title="Dashboard" desc="Học kỳ II 2022-2203" />
         <div className="rounded-lg ml-8">
           <div className="grid grid-cols-12 gap-4 mb-4 mt-4">
             <div className="grid grid-rows-[auto-auto] gap-4 col-span-9">

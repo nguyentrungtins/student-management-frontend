@@ -59,7 +59,7 @@ const ScheduleExam = () => {
 
         <HeaderNavigation
           title="Xếp Thời Khóa Biểu Và Lịch Thi"
-          desc="Học kỳ I 2022-2203"
+          desc="Học kỳ II 2022-2203"
         />
         <div className="p-2">
           <div className="min-h-[1000px] w-11/12 mt-10 mx-auto">

@@ -14,6 +14,12 @@ const nextConfig = {
         hostname: "marketplace.canva.com",
         port: "",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3030",
+        pathname: "/images/**",
+      },
     ],
   },
   modularizeImports: {
