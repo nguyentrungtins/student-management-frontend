@@ -30,11 +30,12 @@ const ViewScore = () => {
     data.map((s, i) => {
       const { score } = s;
       if (score) {
-        avg.push(score);
+        avgList.push(score);
       }
     });
+
     if (avgList.length > 0) {
-      avg = avgList.reduce((partialSum, a) => partialSum + a, 0) / avg.length;
+      avg = avgList.reduce((partialSum, a) => partialSum + a, 0) / avgList.length;
     }
   }
   return (
