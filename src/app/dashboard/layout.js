@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { GiAchievement, GiNotebook } from "react-icons/gi";
@@ -11,6 +11,10 @@ import AppWrap from "@/components/app_wrap";
 import { useRouter } from "next/navigation";
 const DashboardLayout = ({ children }) => {
   const router = useRouter();
+  const [info, setInfo] = useState({
+    name: sessionStorage.getItem("name"),
+    major: sessionStorage.getItem("major"),
+  });
   const handleLogout = () => {
     //console.log(window.interval)
     window.clearInterval(window.interval);
@@ -130,14 +134,18 @@ const DashboardLayout = ({ children }) => {
                   fill={true}
                 />
               </div>
-              <div className="flex flex-col">
-                <span className="text-gray-700 font-semibold text-sm">
-                  Nguyen Trung Tin
-                </span>
-                <span className="text-gray-400 font-semibold text-[0.8rem]">
-                  Software Developer
-                </span>
-              </div>
+              {info ? (
+                <div className="flex flex-col">
+                  <span className="text-gray-700 font-semibold text-sm">
+                    {info.name}
+                  </span>
+                  <span className="text-gray-400 font-semibold text-[0.8rem]">
+                    {info.major}
+                  </span>
+                </div>
+              ) : (
+                ""
+              )}
             </Link>
             <div
               className="flex items-center justify-center gap-5 mt-5 mx-5 h-10 rounded-lg hover:bg-gray-200 bg-gray-100 text-gray-600 hover:text-gray-900"
