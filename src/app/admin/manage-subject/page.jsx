@@ -320,7 +320,7 @@ const manageSubject = () => {
                           onChange={(event) =>
                             setNewSubject((state) => ({
                               ...state,
-                              id_subject: event.target.value,
+                              id_subject: event.target.value.toUpperCase(),
                             }))
                           }
                           required

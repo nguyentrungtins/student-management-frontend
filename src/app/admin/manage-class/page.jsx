@@ -88,7 +88,7 @@ const manageClass = () => {
       })
       .catch(function (err) {
         //console.log(err);
-        warn(err.response.data.message) || warn("Don't correct format!");
+        warn("Fails");
       });
     e.preventDefault();
   };
@@ -380,7 +380,7 @@ const manageClass = () => {
                           onChange={(event) =>
                             setNewClass((state) => ({
                               ...state,
-                              limit_student: event.target.value,
+                              limit_student: Number(event.target.value),
                             }))
                           }
                           placeholder="Nhập text..."

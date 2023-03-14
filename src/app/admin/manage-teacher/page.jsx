@@ -74,7 +74,7 @@ const manageTeacher = () => {
         });
       })
       .catch(function (err) {
-        warn(err.response.data.message);
+        warn("Fails");
       });
     e.preventDefault();
   };
