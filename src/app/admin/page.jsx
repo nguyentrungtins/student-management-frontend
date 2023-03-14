@@ -39,7 +39,7 @@ const Dashboard = () => {
         <HeaderNavigation title="Dashboard" desc="Học kỳ II 2022-2203" />
         <div className="rounded-lg ml-8">
           <div className="grid grid-cols-12 gap-4 mb-4 mt-4">
-            <div className="grid grid-rows-[auto-auto] gap-4 col-span-9">
+            <div className="grid grid-rows-[auto-auto] gap-4 col-span-12">
               <h2 className="text-xl w-full font-semibold text-gray-700 mt-2 mb-1">
                 Tổng Quan
               </h2>
