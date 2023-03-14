@@ -38,7 +38,7 @@ const ManageStudent = () => {
     major: "",
     birth_day: "",
     pass_word: "",
-    id: "",
+    _id: "",
   };
   const [studentUpdate, setStudentUpdate] = useState(initialStudentUpdateData);
   console.log("student update: ", studentUpdate);
@@ -106,7 +106,7 @@ const ManageStudent = () => {
     formStudent.append("birth_day", studentUpdate.birth_day);
     formStudent.append("major", studentUpdate.major);
     // formStudent.append("pass_word", studentUpdate.pass_word);
-    // formStudent.append("id", studentUpdate._id);
+    formStudent.append("id", studentUpdate._id);
 
     console.log(formStudent);
 
