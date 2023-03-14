@@ -36,7 +36,7 @@ const ManageStudent = () => {
     address: "",
     email: "",
     major: "",
-    birth_day: "",
+    birth_date: "",
     pass_word: "",
     _id: "",
   };
@@ -56,7 +56,7 @@ const ManageStudent = () => {
     formStudent.append("address", student.address);
     formStudent.append("phone", student.phone);
     formStudent.append("email", student.email);
-    formStudent.append("birth_day", student.birth_day);
+    formStudent.append("birth_day", student.birth_date);
     formStudent.append("major", student.major);
 
     console.log(formStudent);
@@ -334,7 +334,7 @@ const ManageStudent = () => {
                     </h3>
                     <input
                       type="text"
-                      value={student.birth_day}
+                      value={student.birth_date}
                       onChange={(e) =>
                         setStudent((state) => ({
                           ...state,
@@ -542,7 +542,7 @@ const ManageStudent = () => {
                     </h3>
                     <input
                       type="text"
-                      value={studentUpdate.birth_day}
+                      value={studentUpdate.birth_date}
                       onChange={(e) =>
                         setStudentUpdate((state) => ({
                           ...state,
@@ -572,24 +572,7 @@ const ManageStudent = () => {
                       className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
-                  <div className="flex mt-3 items-center">
-                    <h3 className="w-1/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
-                      Password
-                    </h3>
-                    <input
-                      type="text"
-                      value={studentUpdate.pass_word}
-                      onChange={(e) =>
-                        setStudentUpdate((state) => ({
-                          ...state,
-                          password: e.target.value,
-                        }))
-                      }
-                      required
-                      placeholder="Nhập text..."
-                      className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                    />
-                  </div>
+                  
                   <div className="flex mt-3 items-center">
                     <h3 className="w-1/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
                       Avatar

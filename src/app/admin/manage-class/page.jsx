@@ -87,7 +87,7 @@ const manageClass = () => {
         //console.log(res.data.class);
       })
       .catch(function (err) {
-        //console.log(err);
+        console.log(err);
         warn("Fails");
       });
     e.preventDefault();
