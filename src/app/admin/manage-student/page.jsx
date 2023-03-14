@@ -103,7 +103,7 @@ const ManageStudent = () => {
     formStudent.append("address", studentUpdate.address);
     formStudent.append("phone", studentUpdate.phone);
     formStudent.append("email", studentUpdate.email);
-    formStudent.append("birth_day", studentUpdate.birth_day);
+    formStudent.append("birth_day", studentUpdate.birth_date);
     formStudent.append("major", studentUpdate.major);
     // formStudent.append("pass_word", studentUpdate.pass_word);
     formStudent.append("id", studentUpdate._id);
@@ -546,7 +546,7 @@ const ManageStudent = () => {
                       onChange={(e) =>
                         setStudentUpdate((state) => ({
                           ...state,
-                          birth_day: e.target.value,
+                          birth_date: e.target.value,
                         }))
                       }
                       required
@@ -572,7 +572,7 @@ const ManageStudent = () => {
                       className="block py-1 pr-2 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-90 placeholder-gray-400/70 pl-5 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                     />
                   </div>
-                  
+
                   <div className="flex mt-3 items-center">
                     <h3 className="w-1/4 mt-1 mr-2 text-sm text-gray-600 dark:text-gray-400">
                       Avatar
