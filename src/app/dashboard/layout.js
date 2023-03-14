@@ -22,6 +22,8 @@ const DashboardLayout = ({ children }) => {
     sessionStorage.removeItem("role");
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("refresh_token");
+    sessionStorage.removeItem('name');
+    sessionStorage.removeItem('major');
     router.push("/auth/login");
   };
   return (

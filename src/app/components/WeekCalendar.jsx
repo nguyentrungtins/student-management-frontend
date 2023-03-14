@@ -58,10 +58,16 @@ const calSlot = (schedule) => {
   let result = [];
 
   for (let i = 0; i < 24; i++) {
+    let check = false;
     for (let j = 0; j < slotList.length; j++) {
       if (slotList[j] == i) {
         result.push(slotData[j]);
-      } else result.push(false);
+        check = true;
+        break;
+      }
+    }
+    if (!check) {
+      result.push(false);
     }
   }
   let finalResult = [];
@@ -84,7 +90,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 export default function WeekCalendar({ schedule = [], isExam = false }) {
-  // console.log("schedule", schedule);
+   console.log("schedule", schedule);
   const scheduleHtml = calSlot(schedule);
   const today = startOfToday();
   const weekDay = [];

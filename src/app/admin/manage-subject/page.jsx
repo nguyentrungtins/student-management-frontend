@@ -84,6 +84,8 @@ const manageSubject = () => {
         });
       })
       .catch(function (err) {
+        console.log(err
+          )
         warn(err.response.data.message) || warn("Fail!");
       });
     //console.log(newSubject);
