@@ -73,14 +73,16 @@ const StudentInfo = () => {
         <div className="basis-1/3 border-r-2 mt-6">
           <div className="flex items-center p-4 mt-10">
             <div className="relative flex flex-col items-center w-full">
-              <div className="h-24 w-24 md rounded-full relative avatar  items-end justify-end min-w-max  -top-16 flex ">
-                <Image
-                  className="rounded-full"
-                  src={`http:localhost:3030/images/${student.img}`}
-                  width={100}
-                  height={100}
-                  // fill={true}
-                />
+              <div className="h-24 w-24 md relative avatar  items-end justify-end min-w-max  -top-16 flex ">
+                <div className="relative h-24">
+                  <div className="relative overflow-hidden w-24 h-24 rounded-full">
+                    <Image
+                      src={`http:localhost:3030/images/${student.img}`}
+                      fill={true}
+                      objectFit="cover"
+                    />
+                  </div>
+                </div>
                 <div className="absolute"></div>
               </div>
               <div className="flex flex-col space-y-1 justify-center items-center -mt-12 w-full">
@@ -131,7 +133,7 @@ const StudentInfo = () => {
                       Ngày sinh
                     </td>
                     <td className="px-6 py-4 text-end">
-                      {student && student.birth_day}
+                      {student && student.birth_date}
                     </td>
                   </tr>
                   <tr>
@@ -234,7 +236,7 @@ const StudentInfo = () => {
                       type="email"
                       id="email"
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                      placeholder={student && student.birth_day}
+                      placeholder={student && student.birth_date}
                       disabled
                     />
                   </div>

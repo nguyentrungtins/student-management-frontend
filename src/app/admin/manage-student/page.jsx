@@ -105,7 +105,7 @@ const ManageStudent = () => {
     formStudent.append("email", studentUpdate.email);
     formStudent.append("birth_day", studentUpdate.birth_day);
     formStudent.append("major", studentUpdate.major);
-    formStudent.append("pass_word", studentUpdate.pass_word);
+    // formStudent.append("pass_word", studentUpdate.pass_word);
     // formStudent.append("id", studentUpdate._id);
 
     console.log(formStudent);
@@ -129,11 +129,11 @@ const ManageStudent = () => {
       });
   };
 
- const handleDeleteStudent = () => {
-  const id = studentUpdate.id_student
-  const url = `http://localhost:3030/user/delete/${id}`;
-  axios
-      .delete(url, formStudent, {
+  const handleDeleteStudent = (e) => {
+    const id = e;
+    const url = `http://localhost:3030/user/delete/${id}`;
+    axios
+      .delete(url, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
         },
@@ -148,9 +148,9 @@ const ManageStudent = () => {
         console.log(err);
         error("Xóa sinh viên thất bại");
       });
- }
+  };
 
-  useEffect(() => { 
+  useEffect(() => {
     const url = "http://localhost:3030/user/all";
     if (sessionStorage.getItem("access_token")) {
       axios
@@ -720,7 +720,10 @@ const ManageStudent = () => {
                             >
                               <AiOutlineEdit />
                             </button>
-                            <button className="mx-2" onClick={handleDeleteStudent}>
+                            <button
+                              className="mx-2"
+                              onClick={() => handleDeleteStudent(user._id)}
+                            >
                               <AiOutlineDelete />
                             </button>
                           </td>
