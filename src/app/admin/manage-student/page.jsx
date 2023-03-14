@@ -128,7 +128,29 @@ const ManageStudent = () => {
         error("Chỉnh sửa thông tin sinh viên thất bại");
       });
   };
-  useEffect(() => {
+
+ const handleDeleteStudent = () => {
+  const id = studentUpdate.id_student
+  const url = `http://localhost:3030/user/delete/${id}`;
+  axios
+      .delete(url, formStudent, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("access_token")}`,
+        },
+      })
+      .then((res) => {
+        success("Xóa sinh viên thành công");
+        setIsUpdateForm(false);
+        setStudentUpdate(initialStudentUpdateData);
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        error("Xóa sinh viên thất bại");
+      });
+ }
+
+  useEffect(() => { 
     const url = "http://localhost:3030/user/all";
     if (sessionStorage.getItem("access_token")) {
       axios
@@ -698,7 +720,7 @@ const ManageStudent = () => {
                             >
                               <AiOutlineEdit />
                             </button>
-                            <button className="mx-2">
+                            <button className="mx-2" onClick={handleDeleteStudent}>
                               <AiOutlineDelete />
                             </button>
                           </td>
